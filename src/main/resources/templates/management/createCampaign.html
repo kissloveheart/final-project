@@ -45,25 +45,98 @@
 </header>
 <main class="container-xxl">
 <div class="container">
-    <ul class="nav nav-tabs mb-3">
+    <ul class="nav nav-tabs">
         <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="#">Tạo đợt quyên góp</a>
         </li>
     </ul>
     <div class="bg-white border border-top-0">
-        <form class="row g-3 needs-validation" novalidate>
-            <div class="col-md-6">
-                <label for="validationCustom01" class="form-label">Tên chiến dịch</label>
-                <input type="text" class="form-control" id="validationCustom01" value="" required>
-                <div class="valid-feedback">
-                    Trông có vẻ ổn
-                </div>
+        <div class="container-lg py-3">
+            <div class="alert alert-warning col-md-8 col-lg-5">
+                <strong>Chú ý!</strong> Những trường có dấu (*) là bắt buộc.
             </div>
+             <form class="row g-3 needs-validation" novalidate>
+
+                    <div class="col-md-9">
+                        <label for="nameCampaign" class="form-label" maxlength="250">Tên đợt quyên góp(*):</label>
+                        <input type="text" class="form-control" id="nameCampaign" value="" required>
+                        <div class="invalid-feedback">
+                            Hãy nhập tên đợt quyên góp
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                        <label for="decriptionCampaign" class="form-label">Mô tả câu chuyện về đợt quyên góp(*):</label>
+                        <textarea type="text" class="form-control" id="decriptionCampaign" maxlength="3000"  required></textarea>
+                        <div class="invalid-feedback">
+                            Hãy nhập mô tả đợt quyên góp
+                        </div>
+                    </div>
+                 <div class="col-md-6 col-lg-5">
+                         <label for="organizationCampaign" class="form-label">Đơn vị tổ chức(*):</label>
+                         <select class="form-select" id="organizationCampaign" required>
+                             <option selected disabled value="">Vui lòng chọn...</option>
+                             <option>Trung tâm Hỗ trợ Học sinh, sinh viên TP. Hồ Chí Minh</option>
+                             <option>Sức Mạnh 2000 - Ánh sáng núi rừng</option>
+                             <option>Quỹ từ thiện Hoa Chia Sẻ</option>
+                             <option>Quỹ Từ Thiện & BTXH Trăng Khuyết</option>
+                             <option>Live & Learn</option>
+                             <option>Ủy ban Mặt trận Tổ Quốc Việt Nam</option>
+                         </select>
+                         <div class="invalid-feedback">
+                             Hãy chọn đơn vị tổ chức đợt từ thiện
+                         </div>
+                 </div>
+                 <div class="col-md-6 col-lg-4">
+                     <label for="targetBudget" class="form-label">Ngân sách dự kiến(*):</label>
+                     <input type="text" class="form-control" id="targetBudget" min="1000000"
+                            placeholder="Tối thiểu 1.000.000đ" step="1000000" required>
+                     <div class="invalid-feedback">
+                         Nhập ngân sách dự kiến tối thiểu 1.000.000đ
+                     </div>
+                 </div>
+                 <div class="row g-2" id="uploadImageCampaign">
+                     <label class="form-label">Tải lên hình ảnh(*):</label>
+                     <div class="uploadImageDelete">
+                         <div class="col-md-9 pb-2">
+                             <div class="input-group">
+                                 <input type="file" class="form-control" accept="image/*" id="uploadImage" required>
+                                 <div class="invalid-feedback">
+                                     Vui lòng chọn hình ảnh
+                                 </div>
+                             </div>
+                         </div>
+
+                         <div class="col-md-9">
+                             <div class="input-group">
+                                 <span class="input-group-text">Mô tả hình ảnh</span>
+                                 <input type="text" class="form-control" aria-label="Image descriptions" required>
+                                 <div class="invalid-feedback">
+                                     Vui lòng nhập mô tả hình ảnh
+                                 </div>
+                             </div>
+                         </div>
+                     </div>
+                 </div>
+                 <div class="col-12">
+                     <button type="button" class="btn btn-outline-success" id="addFormUploadImageCampaign">Thêm hình ảnh</button>
+                     <button type="button" class="btn btn-outline-danger" id="deleteUploadFormImageCampaign" disabled>Xóa hình ảnh cuối</button>
+                 </div>
+                     <div class="form-floating col-md-4 col-lg-3">
+                         <input type="date" class="form-control" id="startDateCampaign" onkeydown="return false">
+                         <label for="startDateCampaign" class="form-label">Ngày bắt đầu:</label>
+                     </div>
+                     <div class="form-floating col-md-4 col-lg-3">
+                         <input type="date" class="form-control" id="endDateCampaign" onkeydown="return false">
+                         <label for="endDateCampaign" class="form-label">Ngày kết thúc:</label>
+                     </div>
+
             <div class="col-12">
-                <button class="btn btn-primary" type="submit">Tạo chiến dịch</button>
+                <button class="btn btn-success" type="submit">Tạo đợt quyên góp</button>
+                <button class="btn btn-outline-danger" type="reset" id="resetFormNewCampaign">Nhập lại</button>
             </div>
 
         </form>
+        </div>
     </div>
 
 </div>

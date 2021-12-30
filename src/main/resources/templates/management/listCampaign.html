@@ -17,93 +17,91 @@
     <link rel="stylesheet" th:remove="all" href="/static/css/style.css"/>
 </head>
 <body class="bg-light">
-<header class="container-xxl" th:remove="all">
-<nav class="navbar navbar-expand-md navbar-light bg-light">
-    <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img  src="@{/static/image/logo.png}"
-        style="width: 100px"></a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-                aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-5" >
-                <li class="nav-item">
-                    <a class="nav-link fw-bold link-success active" aria-current="page" href="#">Trang chủ</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link fw-bold link-success" href="#">Đăng nhập</a>
-                </li>
-            </ul>
-            <form class="d-flex">
-                <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="search">
-                <button class="btn btn-success" type="submit">Search</button>
-            </form>
-        </div>
-    </div>
-</nav>
-</header>
-<main class="container-xxl">
-    <nav class="ms-5 mb-3">
-        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-            <button class="nav-link link-success active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
-                    type="button" role="tab" aria-controls="nav-home" aria-selected="true">Danh sách đợt quyên góp</button>
-            <button class="nav-link link-success" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
-                    type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Danh sách thành viên</button>
-            <button class="nav-link link-success" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
-                    type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Thống kê</button>
+<header class="container-xxl border-3 border-bottom border-success">
+    <nav class="navbar navbar-expand-md navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#"><img src="/static/image/logo.png"
+                                                  style="width: 100px"></a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0 fs-5">
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold link-success active" aria-current="page" href="#">Đăng nhập</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-bold link-success" href="#">Trang chủ</a>
+                    </li>
+                </ul>
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="search">
+                    <button class="btn btn-success" type="submit">Search</button>
+                </form>
+            </div>
         </div>
     </nav>
-    <div class="tab-content bg-white" id="nav-tabContent">
-        <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-            <div class="container">
-                <div class="row g-3">
-                    <div class="col-md-6 col-lg-4">
-                        <button type="button" class="btn btn-success">Thêm</button>
-                        <button type="button" class="btn btn-success ms-3 modify" disabled >Cập nhật</button>
-                        <button type="button" class="btn btn-success ms-3 modify"
-                                data-bs-toggle="modal" data-bs-target="#deleteCampaign" disabled >Xóa</button>
-                    </div>
-                    <!-- Modal -->
-                    <div class="modal fade" id="deleteCampaign" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chắn muốn xóa?</h5>
-                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                    Đợt quyên góp ...
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
-                                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Đồng ý</button>
-                                </div>
+</header>
+<main class="container-xxl">
+        <ul class="nav nav-tabs mb-3">
+            <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="#">Danh sách đợt quyên góp</a>
+            </li>
+        </ul>
+    <div class="bg-white border border-top-0">
+        <div class="container-md">
+            <div class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <button type="button" class="btn btn-success">Thêm</button>
+                    <button type="button" class="btn btn-success ms-3 modify" disabled>Cập nhật</button>
+                    <button type="button" class="btn btn-success ms-3 modify"
+                            data-bs-toggle="modal" data-bs-target="#deleteCampaign" disabled>Xóa
+                    </button>
+                </div>
+                <!-- Modal -->
+                <div class="modal fade" id="deleteCampaign" tabindex="-1" aria-labelledby="exampleModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chắn muốn xóa?</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Đợt quyên góp ...
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
+                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Đồng ý</button>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 col-lg-3">
-                        <div class="input-group mb-3">
-                            <label class="input-group-text" for="inputGroupSelect01" >Lọc</label>
-                            <select class="form-select" id="inputGroupSelect01">
-                                <option selected>Lựa chọn</option>
-                                <option value="1">Ngày bắt đầu</option>
-                                <option value="2">Lượt quyên góp</option>
-                                <option value="3">Tiền thu được</option>
-                                <option value="3">Đang diễn ra</option>
-                                <option value="3">Đã kết thúc</option>
-                            </select>
-                        </div>
+                </div>
+                <div class="col-md-6 col-lg-3">
+                    <div class="input-group mb-3">
+                        <label class="input-group-text" for="inputGroupSelect01">Lọc</label>
+                        <select class="form-select" id="inputGroupSelect01">
+                            <option selected>Lựa chọn</option>
+                            <option value="1">Ngày bắt đầu</option>
+                            <option value="2">Lượt quyên góp</option>
+                            <option value="3">Tiền thu được</option>
+                            <option value="3">Đang diễn ra</option>
+                            <option value="3">Đã kết thúc</option>
+                        </select>
                     </div>
-
                 </div>
             </div>
-            <div class="table-responsive-md container">
+        </div>
+
+        <div class="table-responsive-md container">
             <table class="table  table-hover">
                 <thead class="table-light">
                 <tr>
-                    <th scope="col" class="text-secondary" >Chọn</th>
-                    <th scope="col" class="text-secondary" >Tên đợt từ thiện</th>
+                    <th scope="col" class="text-secondary">Chọn</th>
+                    <th scope="col" class="text-secondary">Tên đợt từ thiện</th>
                     <th scope="col" class="text-secondary">Đơn vị tổ chức</th>
                     <th scope="col" class="text-secondary">Ngày bắt đầu</th>
                     <th scope="col" class="text-secondary">Ngày kết thúc</th>
@@ -115,7 +113,7 @@
                 </thead>
                 <tbody>
                 <tr>
-                    <td> <input class="form-check-input ds" type="radio" name="check" id="1"></td>
+                    <td><input class="form-check-input ds" type="radio" name="check" id="1"></td>
                     <td>Chung tay hỗ trợ cho tuyến đầu trực tiếp tham gia phòng chống dịch</td>
                     <td>Ủy ban Mặt trận Tổ Quốc Việt Nam</td>
                     <td>24/06/2021</td>
@@ -126,8 +124,11 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td> <input class="form-check-input ds" type="radio" name="check" id="2"></td>
-                    <td>Cùng “Chuyến xe Mùa xuân” chung tay tặng Tết sum vầy cho các sinh viên có hoàn cảnh khó khăn vì đại dịch.</td>
+                    <td><input class="form-check-input ds" type="radio" name="check" id="2"></td>
+                    <td>Cùng “Chuyến xe Mùa xuân” chung tay tặng Tết sum vầy cho các sinh viên có hoàn cảnh khó khăn vì
+                        đại
+                        dịch.
+                    </td>
                     <td>Trung tâm Hỗ trợ học sinh, sinh viên TP. Hồ Chí Minh</td>
                     <td>23/06/2021</td>
                     <td>-</td>
@@ -137,8 +138,9 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td> <input class="form-check-input ds" type="radio" name="check" id="3"></td>
-                    <td>Chung tay xây ước mơ phòng học mới cho học sinh điểm trường Mầm non bản Na Son, tỉnh Điện Biên</td>
+                    <td><input class="form-check-input ds" type="radio" name="check" id="3"></td>
+                    <td>Chung tay xây ước mơ phòng học mới cho học sinh điểm trường Mầm non bản Na Son, tỉnh Điện Biên
+                    </td>
                     <td>Sức mạnh 2000</td>
                     <td>22/06/2021</td>
                     <td>-</td>
@@ -148,7 +150,7 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td> <input class="form-check-input ds" type="radio" name="check" id="4"></td>
+                    <td><input class="form-check-input ds" type="radio" name="check" id="4"></td>
                     <td>Cùng quyên góp hỗ trợ Má Phượng – Người phụ nữ suốt 20 năm ròng rã âm thầm làm từ thiện</td>
                     <td>Quỹ Từ Thiện & BTXH Trăng Khuyết</td>
                     <td>20/06/2021</td>
@@ -159,7 +161,7 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td> <input class="form-check-input ds" type="radio" name="check" id="5"></td>
+                    <td><input class="form-check-input ds" type="radio" name="check" id="5"></td>
                     <td>Giúp cô con gái nghèo chăm lo mẹ già đãng trí đáng thương</td>
                     <td>Quỹ Từ Thiện & BTXH Trăng Khuyết</td>
                     <td>19/12/2021</td>
@@ -173,14 +175,11 @@
                 </tbody>
 
             </table>
-            </div>
         </div>
-        <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-        <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
     </div>
 </main>
 <footer class="container-xxl text-center bg-light text-muted ">
-    <div class="text-center p-4" >
+    <div class="text-center p-4">
         © 2021 Copyright:
         <a class="link-success fw-bold" href="#">tuthienxyz.com</a>
     </div>
