@@ -17,6 +17,10 @@
             th:src="@{/webjars/jquery/3.6.0/dist/jquery.min.js}"></script>
 
     <script th:src="@{/js/web.js}" src="/static/js/web.js"></script>
+
+    <script th:src="@{/webjars/ckeditor/4.16.1/standard/ckeditor.js}"
+            src="https://cdn.ckeditor.com/4.17.1/standard/ckeditor.js"></script>
+
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/static/css/style.css"/>
 </head>
 <body class="bg-light">
@@ -37,18 +41,7 @@
                 <li class="nav-item">
                     <a class="nav-link fw-bold link-success" href="#">Đăng nhập</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link fw-bold dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="#">Action</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
-                        <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
-                </li>
+
             </ul>
             <form class="d-flex">
                 <input class="form-control me-2" type="search" placeholder="Tìm kiếm" aria-label="search">
@@ -61,10 +54,10 @@
 <main class="container-xxl" th:insert="${content}">
 
 </main>
-<footer class="container-xxl text-center bg-light text-muted ">
+<footer class="container-xxl text-center bg-light">
     <div class="text-center p-4" >
         © 2021 Copyright:
-        <a class="link-success fw-bold" href="#">tuthienxyz.com</a>
+        <a class="link-success fw-bold" href="#">Volunteer</a>
     </div>
 </footer>
 

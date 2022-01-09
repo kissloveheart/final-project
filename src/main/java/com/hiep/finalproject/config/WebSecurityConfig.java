@@ -1,13 +1,40 @@
-package com.hiep.finalproject.security;
+package com.hiep.finalproject.config;
 
 
+import com.hiep.finalproject.service.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 @Configuration
 @EnableWebSecurity
-public class SecurityConfig  extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private UserDetailsServiceImpl userDetailsService;
+
+    public WebSecurityConfig(UserDetailsServiceImpl userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
+
+
+    @Bean
+    public static BCryptPasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        // Sét đặt dịch vụ để tìm kiếm User trong Database.
+        // Và sét đặt PasswordEncoder.
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+
+    }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
 
@@ -18,15 +45,16 @@ public class SecurityConfig  extends WebSecurityConfigurerAdapter {
 
         // Trang /userInfo yêu cầu phải login với vai trò ROLE_USER hoặc ROLE_ADMIN.
         // Nếu chưa login, nó sẽ redirect tới trang /login.
-        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('ROLE_USER', 'ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/userInfo").access("hasAnyRole('USER', 'ADMIN')");
 
         // Trang chỉ dành cho ADMIN
-        http.authorizeRequests().antMatchers("/admin").access("hasRole('ROLE_ADMIN')");
+        http.authorizeRequests().antMatchers("/management/").access("hasRole('ADMIN')");
 
         // Khi người dùng đã login, với vai trò XX.
         // Nhưng truy cập vào trang yêu cầu vai trò YY,
         // Ngoại lệ AccessDeniedException sẽ ném ra.
         http.authorizeRequests().and().exceptionHandling().accessDeniedPage("/403");
+
 
         // Cấu hình cho Login Form.
         http.authorizeRequests().and().formLogin()//
