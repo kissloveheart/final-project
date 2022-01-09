@@ -1,4 +1,4 @@
-package com.hiep.finalproject.security;
+package com.hiep.finalproject.config;
 
 
 import org.springframework.context.annotation.Configuration;

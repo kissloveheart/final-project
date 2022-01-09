@@ -1,5 +1,6 @@
 <!DOCTYPE html >
-<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragment/layout::layout(~{::title},~{::main})}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragment/layout::layout(~{::title},~{::main})}"
+      xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -14,7 +15,8 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js" th:remove="all"></script>
 
     <script th:remove="all" src="/static/js/web.js"></script>
-    <link rel="stylesheet" th:remove="all" href="/static/css/style.css"/>
+    <link rel="stylesheet" href="/static/css/style.css"/>
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css"/>
 </head>
 <body class="bg-light">
 <header class="container-xxl border-3 border-bottom border-success">
@@ -44,57 +46,123 @@
         </div>
     </nav>
 </header>
-<main class="container-xxl">
-        <ul class="nav nav-tabs mb-3">
-            <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Danh sách đợt quyên góp</a>
-            </li>
-        </ul>
-    <div class="bg-white border border-top-0">
+<main class="container-xxl py-3">
+    <!-- Modal -->
+    <div class="modal fade" id="deleteCampaign" tabindex="-1" aria-labelledby="deleteCampaignModal"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteCampaignModal">Xóa đợt quyên góp</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Đợt quyên góp ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
+                    <a class="deleteCampaignLink" >
+                        <button type="button" class="btn btn-success deleteCampaignModalOk" data-bs-dismiss="modal" >Đồng ý</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="editCampaignModal" tabindex="-1" aria-labelledby="editCampaignModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editCampaignModalLabel">Chú ý</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Chỉ chọn một đợt quyên góp để cập nhật!
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Đã hiểu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+        <!--    Content     -->
+
+    <ul class="nav nav-tabs" role="tablist" style="display: none" th:fragment="navBarManagement">
+        <li class="nav-item">
+            <a class="nav-link link-success" th:href="@{/management/list-campaign}" role="tab" data-toggle="tab">Danh sách đợt quyên góp</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-success" th:href="@{/management/campaign/new}" role="tab" data-toggle="tab">Thêm đợt quyên góp</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-success" th:href="@{/management/list-organization}" role="tab" data-toggle="tab">Danh sách đơn vị tổ chức</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link link-success" th:href="@{/management/organization/new}" role="tab" data-toggle="tab">Thêm đơn vị tổ chức</a>
+        </li>
+    </ul>
+    <div class="bg-white border border-top-0 py-3">
         <div class="container-md">
-            <div class="row g-3">
-                <div class="col-md-6 col-lg-4">
+            <div class="d-flex flex-wrap gap-3 mb-3">
+                <a th:href="@{/management/campaign/new}">
                     <button type="button" class="btn btn-success">Thêm</button>
-                    <button type="button" class="btn btn-success ms-3 modify" disabled>Cập nhật</button>
-                    <button type="button" class="btn btn-success ms-3 modify"
-                            data-bs-toggle="modal" data-bs-target="#deleteCampaign" disabled>Xóa
+                </a>
+                <a href="#" class="editCampaignLink">
+                    <button type="button" class="btn btn-success modify"  disabled>Cập nhật</button>
+                </a>
+                    <button type="button" class="btn btn-success modify deleteCampaignButton"
+                            data-bs-toggle="modal" data-bs-target="#deleteCampaign"
+                            th:href="@{/management/delete/}" disabled>Xóa
                     </button>
+                <div class="row">
+                    <form class="input-group col-auto" action="/management/list-campaign">
+                            <label class="input-group-text" for="sortCampaignList">Sắp xếp</label>
+                            <select  class="form-select" id="sortCampaignList" name="sort"
+                                    onchange="this.form.submit()">
+
+                                <option th:selected="${session.sort == 0}" disabled>Lựa chọn</option>
+                                <option value="1" th:selected="${session.sort == 1}">Ngày bắt đầu</option>
+                                <option value="2" th:selected="${session.sort == 2}">Lượt quyên góp</option>
+                                <option value="3" th:selected="${session.sort == 3}">Tiền thu được</option>
+                                <option value="4" th:selected="${session.sort == 4}">Tên A-Z</option>
+                            </select>
+                            <a href="/management/list-campaign?sort=0" th:if="${session.sort != 0}">
+                                <button class="btn btn-outline-secondary" type="button">Xóa</button>
+                            </a>
+                    </form>
                 </div>
-                <!-- Modal -->
-                <div class="modal fade" id="deleteCampaign" tabindex="-1" aria-labelledby="exampleModalLabel"
-                     aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Bạn chắc chắn muốn xóa?</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                        aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                Đợt quyên góp ...
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
-                                <button type="button" class="btn btn-success" data-bs-dismiss="modal">Đồng ý</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6 col-lg-3">
-                    <div class="input-group mb-3">
-                        <label class="input-group-text" for="inputGroupSelect01">Lọc</label>
-                        <select class="form-select" id="inputGroupSelect01">
-                            <option selected>Lựa chọn</option>
-                            <option value="1">Ngày bắt đầu</option>
-                            <option value="2">Lượt quyên góp</option>
-                            <option value="3">Tiền thu được</option>
-                            <option value="3">Đang diễn ra</option>
-                            <option value="3">Đã kết thúc</option>
+                <div class="row">
+                    <form class="input-group col-auto" action="/management/list-campaign">
+                        <label class="input-group-text" for="filterCampaignList">Lọc</label>
+                        <select class="form-select" id="filterCampaignList" name="filter"
+                                onchange="this.form.submit()">
+                            <option th:selected="${session.filter == 0}" disabled>Lựa chọn</option>
+                            <option value="1" th:selected="${session.filter == 1}">Đang diễn ra</option>
+                            <option value="2" th:selected="${session.filter == 2}">Đã kết thúc</option>
                         </select>
+
+                            <a href="/management/list-campaign?filter=0" th:if="${session.filter != 0}">
+                                <button class="btn btn-outline-secondary" type="button">Xóa</button>
+                            </a>
+                    </form>
+                </div>
+
+            </div>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="alert alert-danger col-auto text-center" th:if="${notifyFail}">
+                        <strong>Cảnh báo! </strong> [[${notifyFail}]]
+                    </div>
+                    <div class="alert alert-success col-auto text-center" th:if="${notifySuccess}">
+                        <strong>Thông báo! </strong> [[${notifySuccess}]]
                     </div>
                 </div>
             </div>
         </div>
+
 
         <div class="table-responsive-md container">
             <table class="table  table-hover">
@@ -111,9 +179,20 @@
                     <th scope="col" class="text-secondary">Trạng thái</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody th:remove="all-but-first">
+                <tr th:each="campaignInfo : ${campaignList.list}">
+                    <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${campaignInfo.Id}"></td>
+                    <td th:utext="${campaignInfo.name}"></td>
+                    <td th:utext="${campaignInfo.organization.name}"></td>
+                    <td th:utext="${#dates.format(campaignInfo.startDate,'dd/MM/yyyy')}"></td>
+                    <td th:utext="${campaignInfo.endDate} ?${#dates.format(campaignInfo.endDate,'dd/MM/yyyy')}:'-'"> </td>
+                    <td th:utext="${campaignInfo.countDonation}"></td>
+                    <td th:utext="${campaignInfo.moneyDonation}? ${#numbers.formatDecimal(campaignInfo.moneyDonation,3,'POINT',0,'COMMA')}+'đ':0"></td>
+                    <td th:utext="${campaignInfo.targetBudget}? ${#numbers.formatDecimal(campaignInfo.targetBudget,3,'POINT',0,'COMMA')} +'đ':0"></td>
+                    <td th:utext="${campaignInfo.status} ?'Đang diễn ra':'Kết thúc'"></td>
+                </tr>
                 <tr>
-                    <td><input class="form-check-input ds" type="radio" name="check" id="1"></td>
+                    <td><input class="form-check-input ds" type="checkbox" name="check" value="1"></td>
                     <td>Chung tay hỗ trợ cho tuyến đầu trực tiếp tham gia phòng chống dịch</td>
                     <td>Ủy ban Mặt trận Tổ Quốc Việt Nam</td>
                     <td>24/06/2021</td>
@@ -124,7 +203,7 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td><input class="form-check-input ds" type="radio" name="check" id="2"></td>
+                    <td><input class="form-check-input ds" type="checkbox" name="check" value="2"></td>
                     <td>Cùng “Chuyến xe Mùa xuân” chung tay tặng Tết sum vầy cho các sinh viên có hoàn cảnh khó khăn vì
                         đại
                         dịch.
@@ -138,7 +217,7 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td><input class="form-check-input ds" type="radio" name="check" id="3"></td>
+                    <td><input class="form-check-input ds" type="checkbox" name="check" value="3"></td>
                     <td>Chung tay xây ước mơ phòng học mới cho học sinh điểm trường Mầm non bản Na Son, tỉnh Điện Biên
                     </td>
                     <td>Sức mạnh 2000</td>
@@ -150,7 +229,7 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td><input class="form-check-input ds" type="radio" name="check" id="4"></td>
+                    <td><input class="form-check-input ds" type="checkbox" name="check" value="4"></td>
                     <td>Cùng quyên góp hỗ trợ Má Phượng – Người phụ nữ suốt 20 năm ròng rã âm thầm làm từ thiện</td>
                     <td>Quỹ Từ Thiện & BTXH Trăng Khuyết</td>
                     <td>20/06/2021</td>
@@ -161,7 +240,7 @@
                     <td>Đang diễn ra</td>
                 </tr>
                 <tr>
-                    <td><input class="form-check-input ds" type="radio" name="check" id="5"></td>
+                    <td><input class="form-check-input ds" type="checkbox" name="check" value="5"></td>
                     <td>Giúp cô con gái nghèo chăm lo mẹ già đãng trí đáng thương</td>
                     <td>Quỹ Từ Thiện & BTXH Trăng Khuyết</td>
                     <td>19/12/2021</td>
@@ -175,6 +254,16 @@
                 </tbody>
 
             </table>
+            <ul class="pagination justify-content-center" th:if="${campaignList.totalPages > 1}">
+                <li class="page-item" th:each="page :${campaignList.navigationPages}"
+                    th:classappend="${page eq campaignList.currentPage} ?'active'">
+                    <a th:href="@{|/management/list-campaign/${page}|}" th:if="${page != -1}" th:utext="${page}"
+                    class="page-link text-success" ></a>
+                    <span  th:if="${page == -1}" th:utext="..."
+                       class="page-link"></span>
+                </li>
+
+            </ul>
         </div>
     </div>
 </main>
