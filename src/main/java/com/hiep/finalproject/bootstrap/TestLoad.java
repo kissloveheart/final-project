@@ -32,11 +32,11 @@ public class TestLoad implements CommandLineRunner {
         //Campaign id = campaignDAO.findCampaign(1L);
        // donationDAO.getDonationList(1L).forEach(Donation -> log.info(Donation.toString()));
        // log.info(campaignDAO.getCampaignInfo(3L).toString());
-       campaignDAO.getCampaignInfoList("","",1,2,2).getList().forEach(
-               CampaignInfo -> log.info(CampaignInfo.toString()));
+     /*  campaignDAO.getCampaignInfoList("","",1,2,2).getList().forEach(
+               CampaignInfo -> log.info(CampaignInfo.toString()));*/
        //log.info(organizationDAO.getOrganizationInfo(1L).toString());
-        organizationDAO.getOrganizationInfoList("o.name desc",1,5,2)
-                .getList().forEach(OrganizationInfo ->log.warn(OrganizationInfo.toString()));
+   /*     organizationDAO.getOrganizationInfoList("o.name desc",1,5,2)
+                .getList().forEach(OrganizationInfo ->log.warn(OrganizationInfo.toString()));*/
     }
 
     public static void main(String[] args) throws ParseException {
