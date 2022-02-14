@@ -117,22 +117,6 @@
                         data-bs-toggle="modal" data-bs-target="#deleteOrganization"
                         th:href="@{/management/organization/delete/}" disabled>Xóa
                 </button>
-                <div class="row">
-                    <form class="input-group col-auto" action="/management/list-organization">
-                        <label class="input-group-text" for="sortOrganizationList">Sắp xếp</label>
-                        <select  class="form-select" id="sortOrganizationList" name="sort"
-                                 onchange="this.form.submit()">
-                            <option value="0" th:selected="${session.sortOrganization == 0}" disabled>Lựa chọn</option>
-                            <option value="1" th:selected="${session.sortOrganization == 1}">Số đợt quyên góp</option>
-                            <option value="2" th:selected="${session.sortOrganization == 2}">Tiền thu được</option>
-                            <option value="3" th:selected="${session.sortOrganization == 3}">Tên A-Z</option>
-                        </select>
-                        <a href="/management/list-organization?sort=0" th:if="${session.sortOrganization != 0}">
-                            <button class="btn btn-outline-secondary" type="button">Xóa</button>
-                        </a>
-                    </form>
-                </div>
-
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -157,29 +141,20 @@
                 </tr>
                 </thead>
                 <tbody th:remove="all-but-first">
-                    <tr th:each="organizationInfo : ${organizationList.list}">
-                        <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${organizationInfo.Id}"></td>
+                    <tr th:each="organizationInfo : ${organizationList}">
+                        <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${organizationInfo.id}"></td>
                         <td>
-                            <img th:src="@{|/organization/${organizationInfo.Id}/image|}" th:if="${organizationInfo.Id}" th:width="50">
+                            <img th:src="@{|/organization/${organizationInfo.id}/image|}" th:if="${organizationInfo.id}" th:width="50">
                         </td>
                         <td th:utext="${organizationInfo.name}"></td>
-                        <td th:utext="${organizationInfo.countCampaign}"></td>
-                        <td th:utext="${organizationInfo.moneyDonation}? ${#numbers.formatDecimal(organizationInfo.moneyDonation,3,'POINT',0,'COMMA')}+'đ':0"></td>
+                        <td th:utext="${organizationInfo.countCampaign}?${organizationInfo.countCampaign}:0"></td>
+                        <td th:utext="${organizationInfo.totalMoneyDonation}?
+                         ${#numbers.formatDecimal(organizationInfo.totalMoneyDonation,3,'POINT',0,'COMMA')}+'đ':0"></td>
 
                     </tr>
                 </tbody>
 
             </table>
-            <ul class="pagination justify-content-center" th:if="${organizationList.totalPages > 1}">
-                <li class="page-item" th:each="page :${organizationList.navigationPages}"
-                    th:classappend="${page eq organizationList.currentPage} ?'active'">
-                    <a th:href="@{|/management/list-organization/${page}|}" th:if="${page != -1}" th:utext="${page}"
-                       class="page-link text-success" ></a>
-                    <span  th:if="${page == -1}" th:utext="..."
-                           class="page-link"></span>
-                </li>
-
-            </ul>
         </div>
     </div>
 </main>

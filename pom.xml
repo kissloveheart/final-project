@@ -62,12 +62,7 @@
             <artifactId>spring-security-test</artifactId>
             <scope>test</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.threeten/threetenbp -->
-        <dependency>
-            <groupId>org.threeten</groupId>
-            <artifactId>threetenbp</artifactId>
-            <version>1.5.2</version>
-        </dependency>
+
 
         <!-- https://mvnrepository.com/artifact/org.webjars/bootstrap -->
         <dependency>
@@ -96,6 +91,15 @@
             <artifactId>ckeditor</artifactId>
             <version>4.16.1</version>
         </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.22</version>
+            <scope>provided</scope>
+        </dependency>
+
 
     </dependencies>
 

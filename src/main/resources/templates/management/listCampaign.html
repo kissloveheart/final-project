@@ -62,15 +62,18 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
-                    <a class="deleteCampaignLink" >
-                        <button type="button" class="btn btn-success deleteCampaignModalOk" data-bs-dismiss="modal" >Đồng ý</button>
+                    <a class="deleteCampaignLink">
+                        <button type="button" class="btn btn-success deleteCampaignModalOk" data-bs-dismiss="modal">Đồng
+                            ý
+                        </button>
                     </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="editCampaignModal" tabindex="-1" aria-labelledby="editCampaignModalLabel" aria-hidden="true">
+    <div class="modal fade" id="editCampaignModal" tabindex="-1" aria-labelledby="editCampaignModalLabel"
+         aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -88,20 +91,24 @@
     </div>
 
 
-        <!--    Content     -->
+    <!--    Content     -->
 
     <ul class="nav nav-tabs" role="tablist" style="display: none" th:fragment="navBarManagement">
         <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/list-campaign}" role="tab" data-toggle="tab">Danh sách đợt quyên góp</a>
+            <a class="nav-link link-success" th:href="@{/management/list-campaign}" role="tab" data-toggle="tab">Danh
+                sách đợt quyên góp</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/campaign/new}" role="tab" data-toggle="tab">Thêm đợt quyên góp</a>
+            <a class="nav-link link-success" th:href="@{/management/campaign/new}" role="tab" data-toggle="tab">Thêm đợt
+                quyên góp</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/list-organization}" role="tab" data-toggle="tab">Danh sách đơn vị tổ chức</a>
+            <a class="nav-link link-success" th:href="@{/management/list-organization}" role="tab" data-toggle="tab">Danh
+                sách đơn vị tổ chức</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/organization/new}" role="tab" data-toggle="tab">Thêm đơn vị tổ chức</a>
+            <a class="nav-link link-success" th:href="@{/management/organization/new}" role="tab" data-toggle="tab">Thêm
+                đơn vị tổ chức</a>
         </li>
     </ul>
     <div class="bg-white border border-top-0 py-3">
@@ -111,45 +118,12 @@
                     <button type="button" class="btn btn-success">Thêm</button>
                 </a>
                 <a href="#" class="editCampaignLink">
-                    <button type="button" class="btn btn-success modify"  disabled>Cập nhật</button>
+                    <button type="button" class="btn btn-success modify" disabled>Cập nhật</button>
                 </a>
-                    <button type="button" class="btn btn-success modify deleteCampaignButton"
-                            data-bs-toggle="modal" data-bs-target="#deleteCampaign"
-                            th:href="@{/management/delete/}" disabled>Xóa
-                    </button>
-                <div class="row">
-                    <form class="input-group col-auto" action="/management/list-campaign">
-                            <label class="input-group-text" for="sortCampaignList">Sắp xếp</label>
-                            <select  class="form-select" id="sortCampaignList" name="sort"
-                                    onchange="this.form.submit()">
-
-                                <option th:selected="${session.sort == 0}" disabled>Lựa chọn</option>
-                                <option value="1" th:selected="${session.sort == 1}">Ngày bắt đầu</option>
-                                <option value="2" th:selected="${session.sort == 2}">Lượt quyên góp</option>
-                                <option value="3" th:selected="${session.sort == 3}">Tiền thu được</option>
-                                <option value="4" th:selected="${session.sort == 4}">Tên A-Z</option>
-                            </select>
-                            <a href="/management/list-campaign?sort=0" th:if="${session.sort != 0}">
-                                <button class="btn btn-outline-secondary" type="button">Xóa</button>
-                            </a>
-                    </form>
-                </div>
-                <div class="row">
-                    <form class="input-group col-auto" action="/management/list-campaign">
-                        <label class="input-group-text" for="filterCampaignList">Lọc</label>
-                        <select class="form-select" id="filterCampaignList" name="filter"
-                                onchange="this.form.submit()">
-                            <option th:selected="${session.filter == 0}" disabled>Lựa chọn</option>
-                            <option value="1" th:selected="${session.filter == 1}">Đang diễn ra</option>
-                            <option value="2" th:selected="${session.filter == 2}">Đã kết thúc</option>
-                        </select>
-
-                            <a href="/management/list-campaign?filter=0" th:if="${session.filter != 0}">
-                                <button class="btn btn-outline-secondary" type="button">Xóa</button>
-                            </a>
-                    </form>
-                </div>
-
+                <button type="button" class="btn btn-success modify deleteCampaignButton"
+                        data-bs-toggle="modal" data-bs-target="#deleteCampaign"
+                        th:href="@{/management/delete/}" disabled>Xóa
+                </button>
             </div>
             <div class="container">
                 <div class="row justify-content-center">
@@ -180,14 +154,16 @@
                 </tr>
                 </thead>
                 <tbody th:remove="all-but-first">
-                <tr th:each="campaignInfo : ${campaignList.list}">
-                    <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${campaignInfo.Id}"></td>
+                <tr th:each="campaignInfo : ${campaignList}">
+                    <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${campaignInfo.id}">
+                    </td>
                     <td th:utext="${campaignInfo.name}"></td>
-                    <td th:utext="${campaignInfo.organization.name}"></td>
+                    <td th:utext="${campaignInfo.organizationCommand.name}"></td>
                     <td th:utext="${#dates.format(campaignInfo.startDate,'dd/MM/yyyy')}"></td>
-                    <td th:utext="${campaignInfo.endDate} ?${#dates.format(campaignInfo.endDate,'dd/MM/yyyy')}:'-'"> </td>
-                    <td th:utext="${campaignInfo.countDonation}"></td>
-                    <td th:utext="${campaignInfo.moneyDonation}? ${#numbers.formatDecimal(campaignInfo.moneyDonation,3,'POINT',0,'COMMA')}+'đ':0"></td>
+                    <td th:utext="${campaignInfo.endDate} ?${#dates.format(campaignInfo.endDate,'dd/MM/yyyy')}:'-'"></td>
+                    <td th:utext="${campaignInfo.donationCommandList} ? ${#lists.size(campaignInfo.donationCommandList)}:0"></td>
+                    <td th:utext="${campaignInfo.totalAmount}?
+                            ${#numbers.formatDecimal(campaignInfo.totalAmount,3,'POINT',0,'COMMA')}+'đ':0"></td>
                     <td th:utext="${campaignInfo.targetBudget}? ${#numbers.formatDecimal(campaignInfo.targetBudget,3,'POINT',0,'COMMA')} +'đ':0"></td>
                     <td th:utext="${campaignInfo.status} ?'Đang diễn ra':'Kết thúc'"></td>
                 </tr>
@@ -216,54 +192,10 @@
                     <td>50.000.000đ</td>
                     <td>Đang diễn ra</td>
                 </tr>
-                <tr>
-                    <td><input class="form-check-input ds" type="checkbox" name="check" value="3"></td>
-                    <td>Chung tay xây ước mơ phòng học mới cho học sinh điểm trường Mầm non bản Na Son, tỉnh Điện Biên
-                    </td>
-                    <td>Sức mạnh 2000</td>
-                    <td>22/06/2021</td>
-                    <td>-</td>
-                    <td>118</td>
-                    <td>54.508.567đ</td>
-                    <td>250.000.000đ</td>
-                    <td>Đang diễn ra</td>
-                </tr>
-                <tr>
-                    <td><input class="form-check-input ds" type="checkbox" name="check" value="4"></td>
-                    <td>Cùng quyên góp hỗ trợ Má Phượng – Người phụ nữ suốt 20 năm ròng rã âm thầm làm từ thiện</td>
-                    <td>Quỹ Từ Thiện & BTXH Trăng Khuyết</td>
-                    <td>20/06/2021</td>
-                    <td>-</td>
-                    <td>433</td>
-                    <td>9.508.567đ</td>
-                    <td>50.000.000đ</td>
-                    <td>Đang diễn ra</td>
-                </tr>
-                <tr>
-                    <td><input class="form-check-input ds" type="checkbox" name="check" value="5"></td>
-                    <td>Giúp cô con gái nghèo chăm lo mẹ già đãng trí đáng thương</td>
-                    <td>Quỹ Từ Thiện & BTXH Trăng Khuyết</td>
-                    <td>19/12/2021</td>
-                    <td>-</td>
-                    <td>353</td>
-                    <td>7.508.567đ</td>
-                    <td>50.000.000đ</td>
-                    <td>Đang diễn ra</td>
-                </tr>
 
                 </tbody>
 
             </table>
-            <ul class="pagination justify-content-center" th:if="${campaignList.totalPages > 1}">
-                <li class="page-item" th:each="page :${campaignList.navigationPages}"
-                    th:classappend="${page eq campaignList.currentPage} ?'active'">
-                    <a th:href="@{|/management/list-campaign/${page}|}" th:if="${page != -1}" th:utext="${page}"
-                    class="page-link text-success" ></a>
-                    <span  th:if="${page == -1}" th:utext="..."
-                       class="page-link"></span>
-                </li>
-
-            </ul>
         </div>
     </div>
 </main>
