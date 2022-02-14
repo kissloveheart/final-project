@@ -1,6 +1,9 @@
 package com.hiep.finalproject.model;
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -11,40 +14,25 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name ="Campaign")
 public class Campaign {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="Campaign_ID")
+    @Column(name="campaign_id")
     private Long id;
-
     @ManyToOne(fetch = FetchType.EAGER,cascade = {CascadeType.PERSIST,CascadeType.PERSIST})
-    @JoinColumn(name="Organization_ID", nullable = false)
+    @JoinColumn(name="organization_id", nullable = false)
     private Organization organization;
-
-    @Column(name="Name")
+    @Column(columnDefinition = "nvarchar(255)")
     private String name;
-
-    @Column(name="Target_budget")
     private double targetBudget;
-
-    @Column(name="Start_date")
     private Date startDate;
-
-    @Column(name="End_date")
     private Date endDate;
-
-    @Column(name= "Status")
     private boolean status;
-
-    @Column(name="Description", length = 3000)
+    @Column(columnDefinition = "nvarchar(2555)")
     private String description;
-
     @Lob
-    @Column(name="Image")
     private byte[] image;
-
-    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "campaign", cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<Donation> donationList;
 

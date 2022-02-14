@@ -1,7 +1,10 @@
 package com.hiep.finalproject.model;
 
 
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -10,27 +13,20 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @ToString
-@Table(name="Donation")
 public class Donation {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name="Donation_ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name="donation_id")
     private Long id;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="Campaign_ID")
+    @JoinColumn(name="campaign_id")
     @ToString.Exclude
     private Campaign campaign;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="User_ID")
+    @JoinColumn(name="user_id")
     @ToString.Exclude
     private Account account;
-
-    @Column(name="Date")
     private Date date;
-
-    @Column(name="Amount")
     private double amount;
 
 }

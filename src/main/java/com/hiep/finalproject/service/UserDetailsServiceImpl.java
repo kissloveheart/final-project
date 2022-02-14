@@ -37,7 +37,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         GrantedAuthority authority = new SimpleGrantedAuthority(account.getRole());
         grantList.add(authority);
 
-        UserDetails userDetails = new User(account.getEmail(), account.getPassword(), grantList);
+        UserDetails userDetails = new User(account.getEmail(), account.getEncryptedPassword(), grantList);
         return  userDetails;
     }
 }
