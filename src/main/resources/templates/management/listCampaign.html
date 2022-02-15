@@ -72,25 +72,6 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editCampaignModal" tabindex="-1" aria-labelledby="editCampaignModalLabel"
-         aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editCampaignModalLabel">Chú ý</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Chỉ chọn một đợt quyên góp để cập nhật!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Đã hiểu</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!--    Content     -->
 
     <ul class="nav nav-tabs" role="tablist" style="display: none" th:fragment="navBarManagement">
@@ -99,16 +80,8 @@
                 sách đợt quyên góp</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/campaign/new}" role="tab" data-toggle="tab">Thêm đợt
-                quyên góp</a>
-        </li>
-        <li class="nav-item">
             <a class="nav-link link-success" th:href="@{/management/list-organization}" role="tab" data-toggle="tab">Danh
                 sách đơn vị tổ chức</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/organization/new}" role="tab" data-toggle="tab">Thêm
-                đơn vị tổ chức</a>
         </li>
     </ul>
     <div class="bg-white border border-top-0 py-3">
@@ -117,10 +90,7 @@
                 <a th:href="@{/management/campaign/new}">
                     <button type="button" class="btn btn-success">Thêm</button>
                 </a>
-                <a href="#" class="editCampaignLink">
-                    <button type="button" class="btn btn-success modify" disabled>Cập nhật</button>
-                </a>
-                <button type="button" class="btn btn-success modify deleteCampaignButton"
+                <button type="button" class="btn btn-danger modify deleteCampaignButton"
                         data-bs-toggle="modal" data-bs-target="#deleteCampaign"
                         th:href="@{/management/delete/}" disabled>Xóa
                 </button>
@@ -139,8 +109,8 @@
 
 
         <div class="table-responsive-md container">
-            <table class="table  table-hover">
-                <thead class="table-light">
+            <table id="listData" class="display">
+                <thead>
                 <tr>
                     <th scope="col" class="text-secondary">Chọn</th>
                     <th scope="col" class="text-secondary">Tên đợt từ thiện</th>
@@ -157,8 +127,12 @@
                 <tr th:each="campaignInfo : ${campaignList}">
                     <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${campaignInfo.id}">
                     </td>
-                    <td th:utext="${campaignInfo.name}"></td>
-                    <td th:utext="${campaignInfo.organizationCommand.name}"></td>
+                    <td>
+                        <a th:href="@{'/management/campaign/edit/'+${campaignInfo.id}}" th:utext="${campaignInfo.name}"
+                           class="text-success text-decoration-none"></a>
+                    </td>
+
+                    <td th:utext="${campaignInfo.organizationCommand.name}" ></td>
                     <td th:utext="${#dates.format(campaignInfo.startDate,'dd/MM/yyyy')}"></td>
                     <td th:utext="${campaignInfo.endDate} ?${#dates.format(campaignInfo.endDate,'dd/MM/yyyy')}:'-'"></td>
                     <td th:utext="${campaignInfo.donationCommandList} ? ${#lists.size(campaignInfo.donationCommandList)}:0"></td>

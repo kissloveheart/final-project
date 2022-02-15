@@ -70,38 +70,10 @@
         </div>
     </div>
 
-    <div class="modal fade" id="editOrganizationModal" tabindex="-1" aria-labelledby="editOrganizationModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="editOrganizationModalLabel">Chú ý</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    Chỉ chọn một đơn vị tổ chức để cập nhật!
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-success" data-bs-dismiss="modal">Đã hiểu</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <!--    Content     -->
-
-    <ul class="nav nav-tabs" role="tablist" style="display: none" th:fragment="navBarManagement">
+    <ul class="nav nav-tabs" th:replace="~{management/listCampaign::navBarManagement}">
         <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/list-campaign}" role="tab" data-toggle="tab">Danh sách đợt quyên góp</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/campaign/new}" role="tab" data-toggle="tab">Thêm đợt quyên góp</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/list-organization}" role="tab" data-toggle="tab">Danh sách đơn vị tổ chức</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link link-success" th:href="@{/management/organization/new}" role="tab" data-toggle="tab">Thêm đơn vị tổ chức</a>
+            <a class="nav-link active" aria-current="page" href="#">Tạo đợt quyên góp</a>
         </li>
     </ul>
     <div class="bg-white border border-top-0 py-3">
@@ -110,10 +82,7 @@
                 <a th:href="@{/management/organization/new}">
                     <button type="button" class="btn btn-success">Thêm</button>
                 </a>
-                <a href="#" class="editOrganizationLink">
-                    <button type="button" class="btn btn-success modify"  disabled>Cập nhật</button>
-                </a>
-                <button type="button" class="btn btn-success modify deleteOrganizationButton"
+                <button type="button" class="btn btn-danger modify deleteOrganizationButton"
                         data-bs-toggle="modal" data-bs-target="#deleteOrganization"
                         th:href="@{/management/organization/delete/}" disabled>Xóa
                 </button>
@@ -130,7 +99,7 @@
             </div>
         </div>
         <div class="table-responsive-md container">
-            <table class="table  table-hover">
+            <table class="display" id="listData">
                 <thead class="table-light">
                 <tr>
                     <th scope="col" class="text-secondary">Chọn</th>
@@ -146,14 +115,15 @@
                         <td>
                             <img th:src="@{|/organization/${organizationInfo.id}/image|}" th:if="${organizationInfo.id}" th:width="50">
                         </td>
-                        <td th:utext="${organizationInfo.name}"></td>
+                        <td>
+                            <a th:href="@{'/management/organization/edit/'+${organizationInfo.id}}" th:utext="${organizationInfo.name}"
+                               class="text-success text-decoration-none"></a>
+                        </td>
                         <td th:utext="${organizationInfo.countCampaign}?${organizationInfo.countCampaign}:0"></td>
                         <td th:utext="${organizationInfo.totalMoneyDonation}?
                          ${#numbers.formatDecimal(organizationInfo.totalMoneyDonation,3,'POINT',0,'COMMA')}+'đ':0"></td>
-
                     </tr>
                 </tbody>
-
             </table>
         </div>
     </div>

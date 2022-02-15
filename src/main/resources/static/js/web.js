@@ -65,7 +65,7 @@ $(document).ready(function(){
     })
 
     // click edit campaign
-    $(".editCampaignLink").click(function (e) {
+    $(".editCampaignLink")?.click(function (e) {
         if ($("input.ds:checked").length == 0){
             e.preventDefault();
         }
@@ -77,7 +77,7 @@ $(document).ready(function(){
     })
 
     // click edit organization
-    $(".editOrganizationLink").click(function (e) {
+    $(".editOrganizationLink")?.click(function (e) {
         if ($("input.ds:checked").length == 0){
             e.preventDefault();
         }
@@ -194,6 +194,25 @@ $(document).ready(function(){
     $("#resetFormNewCampaign").click(function () {
         $(".needs-validation").removeClass("was-validated");
     })
+
+    //Customize table data
+    $('#listData')?.DataTable({
+        "lengthMenu": [[5, 10, 20, -1], [5, 10, 20, "All"]],
+        "language": {
+            "paginate": {
+                "next": "Trang tiếp",
+                "previous" : "Trang trước"
+            },
+            "lengthMenu": "Hiện _MENU_ dòng mỗi trang",
+            "zeroRecords": "Không tìm thấy!",
+            "info": "Trang _PAGE_/_PAGES_",
+            "infoEmpty": "Không có dữ liệu!",
+            "search": "Tìm kiếm",
+            "infoFiltered": "(Lọc từ _MAX_ dòng)"
+        },
+
+        stateSave : true,
+    });
 
 
 });
