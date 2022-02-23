@@ -1,0 +1,10 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<p style="color: red; font-weight: bold" th:text="#{greeting(${name})}"></p>
+<p>Bạn đã đăng ký thành công, vui lòng nhấn vào đường dẫn bên dưới đây để kích hoạt tài khoản:</p>
+<a th:href="${link}" target="_blank" th:utext="${link}"></a>
+<br>
+<p>Cảm ơn!</p>
+</body>
+</html>

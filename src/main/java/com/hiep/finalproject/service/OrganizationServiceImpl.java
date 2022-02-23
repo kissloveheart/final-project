@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
-import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,7 +70,7 @@ public class OrganizationServiceImpl implements OrganizationService {
     }
 
     @Override
-    public void saveOrganization(OrganizationForm organizationForm) throws ParseException, IOException {
+    public void saveOrganization(OrganizationForm organizationForm) throws  IOException {
         Organization organization;
         if(organizationForm.getId()!= null){
             organization = organizationRepository.findById(organizationForm.getId()).get();

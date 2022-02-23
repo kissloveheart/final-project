@@ -26,6 +26,7 @@ public class Donation {
     @JoinColumn(name="user_id")
     @ToString.Exclude
     private Account account;
+    @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     private double amount;
 

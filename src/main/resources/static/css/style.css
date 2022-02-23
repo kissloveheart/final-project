@@ -4,6 +4,17 @@
 	border-color: #198754;
 }
 
+.nav-pills .nav-link.active {
+	background-color: #198754;
+}
+
+
+.bi {
+	vertical-align: -.125em;
+	pointer-events: none;
+	fill: currentColor;
+}
+
 /*horizontal scrollable nav bar*/
 .scrtabs-tab-container * {
 	box-sizing: border-box; }

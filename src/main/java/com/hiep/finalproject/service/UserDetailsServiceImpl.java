@@ -23,6 +23,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     AccountRepository accountRepository;
 
+    private static final boolean enabled = true;
+    private static final boolean accountNonExpired = true;
+    private static final boolean credentialsNonExpired = true;
+    private static final boolean accountNonLocked = true;
+
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         Optional<Account> accountOptional = accountRepository.findByEmail(email);
@@ -37,7 +42,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         GrantedAuthority authority = new SimpleGrantedAuthority(account.getRole());
         grantList.add(authority);
 
-        UserDetails userDetails = new User(account.getEmail(), account.getEncryptedPassword(), grantList);
-        return  userDetails;
+        return new User(account.getEmail(),
+                account.getEncryptedPassword(),
+                account.isEnable(),
+                accountNonExpired,
+                credentialsNonExpired,
+                accountNonLocked,grantList);
     }
 }

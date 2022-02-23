@@ -1,21 +1,21 @@
 USE [Charity]
 SET IDENTITY_INSERT [dbo].[Account] ON
 
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (1, N'user9@user.com', N'12345', N'0981234581', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (2, N'admin4@admin.com', N'12345', N'0981234571', N'ADMIN     ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (3, N'user4@user.com', N'12345', N'0981234576', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (4, N'admin3@admin.com', N'12345', N'0981234570', N'ADMIN     ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (5, N'admin1@admin.com', N'12345', N'0981234568', N'ADMIN     ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (6, N'user5@user.com', N'12345', N'0981234577', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (7, N'user6@user.com', N'12345', N'0981234578', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (8, N'user3@user.com', N'12345', N'0981234575', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (9, N'user1@user.com', N'12345', N'0981234573', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (10, N'user2@user.com', N'12345', N'0981234574', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (11, N'admin@admin.com', N'12345', N'0981234567', N'ADMIN     ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (12, N'user7@user.com', N'12345', N'0981234579', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (13, N'admin2@admin.com', N'12345', N'0981234569', N'ADMIN     ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (14, N'user@user.com', N'12345', N'0981234572', N'USER      ', 1)
-INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (15, N'user8@user.com', N'12345', N'0981234580', N'USER      ', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (1, N'user9@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234581', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (2, N'admin4@admin.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234571', N'ADMIN', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (3, N'user4@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234576', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (4, N'admin3@admin.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234570', N'ADMIN', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (5, N'admin1@admin.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234568', N'ADMIN', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (6, N'user5@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234577', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (7, N'user6@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234578', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (8, N'user3@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234575', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (9, N'user1@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234573', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (10, N'user2@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234574', N'USER', 0)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (11, N'admin@admin.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234567', N'ADMIN', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (12, N'user7@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234579', N'USER', 0)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (13, N'admin2@admin.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234569', N'ADMIN', 0)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (14, N'user@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234572', N'USER', 1)
+INSERT [dbo].[Account] ([User_ID], [Email], [Password], [Phone], [Role], [Enable]) VALUES (15, N'user8@user.com', N'$2a$10$2wttH5fuTNbqWUid3ZO7GeyeaZ2hQXyOR.YlOfHnnsoQX14.9DeDm', N'0981234580', N'USER', 0)
 SET IDENTITY_INSERT [dbo].[Account] OFF
 
 SET IDENTITY_INSERT [dbo].[Organization] ON

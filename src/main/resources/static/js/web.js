@@ -8,6 +8,28 @@ $(document).ready(function(){
             window.location.pathname.indexOf($(this).attr("href")) > -1);
     });
 
+    $.each($("ul.nav-pills").find("a"), function() {
+        $(this).toggleClass("active",
+            window.location.pathname.indexOf($(this).attr("href")) > -1);
+    });
+
+    $('#filter')?.click(function () {
+        $('#removeFilter').show();
+    })
+    $('#removeFilter')?.click(function () {
+        $(this).hide();
+    })
+
+    $('.avatar')?.ready(function () {
+        $.ajax('/account/'+$('.avatar').attr('id')+'/image').done(function () {
+            $('.avatar').show();
+            $(".avatar--backup").hide();
+        }).fail(function () {
+            $('.avatar').hide();
+            $(".avatar--backup").show();
+        })
+    })
+
 
     // convert string to number
     function localStringToNumber( s ) {
@@ -101,6 +123,64 @@ $(document).ready(function(){
         }
         $(this).addClass("was-validated");
     })
+
+    // disable form submissions if there are invalid fields for registration form
+    $(".regis").submit(function (e) {
+
+       if ( $("#password").val() != $("#rePassword").val()){
+           $("#rePassword")[0]?.setCustomValidity("The confirm password is wrong")
+       } else {
+           $("#rePassword")[0]?.setCustomValidity("");
+       }
+
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
+    // disable form submissions if there are invalid fields for forget password form
+    $(".forgetPassword").submit(function (e) {
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
+    //  disable form submissions if there are invalid fields for new password form
+    $(".newPassword").submit(function (e) {
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
+    $(".editProfile").submit(function (e) {
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
+    $(".changePassword").submit(function (e) {
+
+        if ( $("#newPass").val() != $("#newRePass").val()){
+            $("#newRePass")[0]?.setCustomValidity("The confirm password is wrong")
+        } else {
+            $("#newRePass")[0]?.setCustomValidity("");
+        }
+
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
 
 /*    $(".login #email").blur(function () {
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;

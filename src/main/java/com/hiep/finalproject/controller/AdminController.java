@@ -5,6 +5,7 @@ import com.hiep.finalproject.form.CampaignForm;
 import com.hiep.finalproject.form.OrganizationForm;
 import com.hiep.finalproject.model.Campaign;
 import com.hiep.finalproject.model.Organization;
+import com.hiep.finalproject.service.AccountService;
 import com.hiep.finalproject.service.CampaignService;
 import com.hiep.finalproject.service.OrganizationService;
 import com.hiep.finalproject.validator.CampaignValidator;
@@ -37,6 +38,8 @@ public class AdminController {
     private OrganizationValidator organizationValidator;
     @Autowired
     private OrganizationService organizationService;
+    @Autowired
+    private AccountService accountService;
 
     @InitBinder({"campaignForm", "organizationForm"})
     public void customizeBinding(WebDataBinder binder) {
@@ -139,7 +142,7 @@ public class AdminController {
         return "redirect:/management/list-campaign";
     }
 
-    @GetMapping({"/campaign/{id:\\d+}/image", "/organization/{id:\\d+}/image"})
+    @GetMapping({"/campaign/{id:\\d+}/image", "/organization/{id:\\d+}/image","/account/{id:\\d+}/image"})
     public void getImageFromDB(@PathVariable String id, HttpServletRequest request,
                                HttpServletResponse response) throws IOException {
         Campaign campaign = null;
@@ -147,6 +150,7 @@ public class AdminController {
         String requestURL = request.getRequestURI();
         String regexCampaign = "/campaign/\\d+/image";
         String regexOrganization = "/organization/\\d+/image";
+        String regexAccount = "/account/\\d+/image";
 
         if (requestURL.matches(regexCampaign)) {
             if (id != null) {
@@ -165,6 +169,16 @@ public class AdminController {
             if (organization != null && organization.getImage() != null) {
                 response.setContentType("image/jpg");
                 response.getOutputStream().write(organization.getImage());
+            }
+        }
+        if (requestURL.matches(regexAccount) && id != null) {
+            byte[] image;
+            image= accountService.getAccountAvatar(Long.parseLong(id));
+            if (image!= null && image.length > 0) {
+                response.setContentType("image/jpg");
+                response.getOutputStream().write(image);
+            } else {
+                response.setStatus(HttpServletResponse.SC_NOT_FOUND);
             }
         }
         response.getOutputStream().close();
@@ -249,6 +263,15 @@ public class AdminController {
             }
         }
         return "redirect:/management/list-organization";
+    }
+
+    @GetMapping("/management/list-user")
+    public String getAllListUser(@RequestParam(required = false) String role,
+                                 @RequestParam(required = false) Boolean enabled,Model model){
+        model.addAttribute("userList",accountService.getAllAccountList(role,enabled));
+        model.addAttribute("role",role);
+        model.addAttribute("enabled",enabled);
+        return "/management/listUser";
     }
 
 
