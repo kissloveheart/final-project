@@ -15,14 +15,16 @@ public class OnRegistrationCompleteEvent extends ApplicationEvent {
     private String appUrl;
     private Locale locale;
     private AccountCommand accountCommand;
+    private String password;
 
     public OnRegistrationCompleteEvent(
-            AccountCommand accountCommand, Locale locale, String appUrl) {
+            AccountCommand accountCommand, Locale locale, String appUrl,String password) {
         super(accountCommand);
 
         this.accountCommand = accountCommand;
         this.locale = locale;
         this.appUrl = appUrl;
+        this.password = password;
     }
 
 }

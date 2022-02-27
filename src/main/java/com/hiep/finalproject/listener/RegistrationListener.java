@@ -31,7 +31,10 @@ public class RegistrationListener implements ApplicationListener<OnRegistrationC
         String name = account.getEmail().substring(0,account.getEmail().indexOf("@"));
         String confirmationUrl = event.getAppUrl() + "/confirm/" + token;
         try {
-            mailService.sendRegisMail(name,confirmationUrl,account.getEmail(),event.getLocale());
+            if(event.getPassword() == null){
+                mailService.sendRegisMail(name,confirmationUrl,account.getEmail(),event.getLocale());
+            }
+            mailService.sendNewUserMail(name,confirmationUrl, account.getEmail(), event.getPassword());
         } catch (MessagingException e) {
             log.info("Email sent unsuccessfully");
         }

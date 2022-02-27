@@ -31,6 +31,7 @@ public class Account {
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDate = new Date();
     private Double balance = 0D;
+    @Column(columnDefinition = "nvarchar(255)")
     private String address;
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL)
     @ToString.Exclude

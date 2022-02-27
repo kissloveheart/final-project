@@ -63,6 +63,10 @@
                         Đăng nhập không thành công! <br>
                         <p th:utext="${session[SPRING_SECURITY_LAST_EXCEPTION]}"></p>
                     </div>
+                    <div class="alert alert-danger col-auto text-center"
+                         th:if="${#request.getParameter('expire') == 'true'}">
+                        Phiên kết nối đã hết hạn!
+                    </div>
                     <div class="alert alert-success col-auto text-center" th:if="${message}">
                         <p th:text="${message}"></p>
                     </div>
@@ -86,6 +90,10 @@
                                     Mật khẩu chứa ít nhất một số và ít nhất 8 ký tự!
                                 </span>
                             </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="gridCheck1">
+                            <label class="form-check-label" for="gridCheck1" name="remember-me"> Ghi nhớ?</label>
                         </div>
                         <!--                        (?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}-->
                         <div class="row">

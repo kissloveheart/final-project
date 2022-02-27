@@ -50,7 +50,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
 
     @Override
     public void addInterceptors(final InterceptorRegistry registry) {
-        registry.addInterceptor(new RegisInterceptor()).addPathPatterns("/regis");
+        registry.addInterceptor(new RegisInterceptor()).addPathPatterns("/regis","/login");
         // add locale interceptor to check lang
         LocaleChangeInterceptor localeInterceptor = new LocaleChangeInterceptor();
         localeInterceptor.setParamName("lang");

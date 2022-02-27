@@ -48,12 +48,12 @@
 </header>
 <main class="container-xxl py-3">
     <!-- Modal -->
-    <div class="modal fade" id="deleteOrganization" tabindex="-1" aria-labelledby="deleteOrganizationModal"
+    <div class="modal fade" id="deleteUser" tabindex="-1" aria-labelledby="deleteUserModal"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteUserModal">Xóa đơn tài khoản</h5>
+                    <h5 class="modal-title" id="deleteUserModal">Xóa tài khoản người dùng</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
@@ -62,8 +62,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
-                    <a class="deleteOrganizationLink">
-                        <button type="button" class="btn btn-success deleteOrganizationModalOk" data-bs-dismiss="modal">
+                    <a class="deleteUserLink">
+                        <button type="button" class="btn btn-success deleteUserModalOk" data-bs-dismiss="modal">
                             Đồng ý
                         </button>
                     </a>
@@ -84,7 +84,7 @@
                 <a th:href="@{/management/user/new}">
                     <button type="button" class="btn btn-success">Thêm</button>
                 </a>
-                <button type="button" class="btn btn-danger modify deleteOrganizationButton"
+                <button type="button" class="btn btn-danger modify deleteUserButton"
                         data-bs-toggle="modal" data-bs-target="#deleteUser"
                         th:href="@{/management/user/delete/}" disabled>Xóa
                 </button>
@@ -119,6 +119,12 @@
                     <div class="alert alert-success col-auto text-center" th:if="${notifySuccess}">
                         <strong>Thông báo! </strong> [[${notifySuccess}]]
                     </div>
+                    <div class="alert alert-danger col-auto text-center" th:if="${#request.getParameter('notifyFail')}">
+                        <strong>Cảnh báo! </strong> <span th:text="${#request.getParameter('notifyFail')}"></span>
+                    </div>
+                    <div class="alert alert-success col-auto text-center" th:if="${#request.getParameter('notifySuccess')}">
+                        <strong>Thông báo! </strong> <span th:text="${#request.getParameter('notifySuccess')}"></span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -138,7 +144,8 @@
                 </thead>
                 <tbody th:remove="all-but-first">
                 <tr th:each="userInfo : ${userList}">
-                    <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${userInfo.id}"></td>
+                    <td><input class="form-check-input ds" th:if="${userInfo.role} ne 'ADMIN'"
+                               type="checkbox" name="check" th:value="${userInfo.id}"></td>
                     <td>
                         <a th:href="@{'/management/user/edit/'+${userInfo.id}}" th:utext="${userInfo.email}"
                            class="text-success text-decoration-none"></a>

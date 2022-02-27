@@ -53,6 +53,26 @@
                     </li>
                 </ul>
                 <hr>
+                <div sec:authorize="hasAuthority('ADMIN')">
+                    <ul class="nav nav-pills flex-column mb-auto">
+                        <h5>Quản lý từ thiện</h5>
+                        <li>
+                            <a th:href="@{/management/list-campaign}" class="nav-link link-dark">
+                                Danh sách đợt từ thiện
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/management/list-organization}" class="nav-link link-dark">
+                                Danh sách đơn vị tổ chức
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/management/list-user}" class="nav-link link-dark">
+                                Danh sách tài khoản
+                            </a>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="col-md-8 col-lg-9 pt-5 ps-1 pe-1">

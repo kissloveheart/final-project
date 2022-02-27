@@ -10,10 +10,13 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.session.SessionRegistry;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.rememberme.InMemoryTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
 
 @Configuration
 @EnableWebSecurity
@@ -27,6 +30,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     public static BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public SessionRegistry sessionRegistry() {
+        return new SessionRegistryImpl();
+    }
+
+/*    @Bean
+    public ConcurrentSessionFilter concurrentSessionFilter(){
+        SimpleRedirectSessionInformationExpiredStrategy expiredSessionStrategy =
+                new SimpleRedirectSessionInformationExpiredStrategy("/login?expire=true");
+        return new ConcurrentSessionFilter(sessionRegistry(),expiredSessionStrategy);
+    }*/
+
+    @Bean
+    public HttpSessionEventPublisher httpSessionEventPublisher() {
+        return new HttpSessionEventPublisher();
     }
 
     @Autowired
@@ -78,10 +98,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Cấu hình cho Logout Page.
                 .and().logout()
                 .logoutUrl("/logout")
-                .logoutSuccessUrl("/");
+                .logoutSuccessUrl("/")
+                .deleteCookies("JSESSIONID").clearAuthentication(true)
+                .and().sessionManagement().maximumSessions(5)
+                .expiredUrl("/login?expire=true");
+
+        //addFilterBefore(concurrentSessionFilter(), ConcurrentSessionFilter.class);
 
         // Cấu hình Remember Me.
-        http.authorizeRequests().and().rememberMe().tokenRepository(this.persistentTokenRepository())
+        http.authorizeRequests().and().rememberMe().key("hahahaha").tokenRepository(this.persistentTokenRepository())
                 .tokenValiditySeconds(24*60*60); // 24h
 
     }

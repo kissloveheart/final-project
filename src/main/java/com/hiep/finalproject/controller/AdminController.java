@@ -1,10 +1,15 @@
 package com.hiep.finalproject.controller;
 
+import com.hiep.finalproject.command.AccountCommand;
 import com.hiep.finalproject.command.OrganizationCommand;
+import com.hiep.finalproject.form.AccountForm;
 import com.hiep.finalproject.form.CampaignForm;
 import com.hiep.finalproject.form.OrganizationForm;
+import com.hiep.finalproject.listener.OnRegistrationCompleteEvent;
+import com.hiep.finalproject.model.Account;
 import com.hiep.finalproject.model.Campaign;
 import com.hiep.finalproject.model.Organization;
+import com.hiep.finalproject.repository.AccountRepository;
 import com.hiep.finalproject.service.AccountService;
 import com.hiep.finalproject.service.CampaignService;
 import com.hiep.finalproject.service.OrganizationService;
@@ -12,6 +17,8 @@ import com.hiep.finalproject.validator.CampaignValidator;
 import com.hiep.finalproject.validator.OrganizationValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.core.env.Environment;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Optional;
+import java.util.UUID;
 
 @Slf4j
 @Controller
@@ -40,6 +49,12 @@ public class AdminController {
     private OrganizationService organizationService;
     @Autowired
     private AccountService accountService;
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
+    @Autowired
+    private AccountRepository accountRepository;
+    @Autowired
+    Environment environment;
 
     @InitBinder({"campaignForm", "organizationForm"})
     public void customizeBinding(WebDataBinder binder) {
@@ -272,6 +287,75 @@ public class AdminController {
         model.addAttribute("role",role);
         model.addAttribute("enabled",enabled);
         return "/management/listUser";
+    }
+
+    @GetMapping("/management/user/new")
+    public String createUser(Model model){
+        AccountForm accountForm = new AccountForm();
+        model.addAttribute("userForm",accountForm);
+        return "/management/createUser";
+    }
+
+    @GetMapping("/management/user/edit/{id:\\d+}")
+    public String updateUser(@PathVariable Long id, Model model){
+        AccountForm accountForm = new AccountForm(accountRepository.getAccountById(id).get());
+        model.addAttribute("userForm",accountForm);
+        return "/management/createUser";
+    }
+
+    @PostMapping("/management/user/new")
+    public String createUser(@ModelAttribute("userForm") AccountForm accountForm, HttpServletRequest request
+                                ,RedirectAttributes redirectAttributes){
+        String password = null;
+        if(accountForm == null){
+            redirectAttributes.addAttribute("notifyFail","Có lỗi xảy ra");
+            return "redirect:/management/list-user";
+        }
+        if (accountForm.getId() == null) {
+            password = UUID.randomUUID().toString();
+            accountForm.setPassword(password);
+        }
+        try {
+            AccountCommand saveUser = accountService.saveAccount(accountForm);
+            if(accountForm.getId() == null){
+                String appUrl = environment.getProperty("user.regis.url");
+                eventPublisher.publishEvent(new OnRegistrationCompleteEvent(saveUser,
+                        request.getLocale(), appUrl, password));
+                redirectAttributes.addAttribute("notifySuccess","Tạo người dùng thành công");
+                return "redirect:/management/list-user";
+            }
+            redirectAttributes.addAttribute("notifySuccess","Cập nhật người dùng thành công");
+            return "redirect:/management/list-user";
+        } catch (IOException e) {
+            redirectAttributes.addAttribute("notifyFail","Có lỗi xảy ra");
+            return "redirect:/management/list-user";
+        }
+
+    }
+
+    @GetMapping("/management/user/delete/{checkId}")
+    public String deleteUser(@PathVariable String checkId,
+                                     RedirectAttributes redirectAttributes) {
+        Boolean isDelete = accountService.deleteUserIdList(checkId);
+        if (!isDelete) {
+            redirectAttributes.addAttribute("notifyFail", "Xóa người dùng không thành công");
+        }
+        log.info("Delete user successfully");
+        redirectAttributes.addAttribute("notifySuccess", "Đã xóa thành công người dùng");
+        return "redirect:/management/list-user";
+    }
+
+    @PostMapping("/send_user_password")
+    public String forgetPassword(@RequestParam Long id,HttpServletRequest request, RedirectAttributes redirectAttributes){
+        Optional<Account> accountOptional = accountRepository.findById(id);
+        if (accountOptional.isEmpty()){
+            redirectAttributes.addAttribute("error","Email không tồn tại");
+            return "redirect:/management/list-user";
+        }
+        String appUrl = environment.getProperty("user.newpassword.url");
+        accountService.sendForgetPasswordEmail(accountOptional.get(), appUrl);
+        redirectAttributes.addAttribute("notifySuccess", "Đã gửi mật khẩu mới đến email người dùng");
+        return "redirect:/management/list-user";
     }
 
 

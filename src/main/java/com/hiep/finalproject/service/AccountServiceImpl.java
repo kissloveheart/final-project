@@ -12,9 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.session.SessionInformation;
+import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
@@ -36,6 +41,12 @@ public class AccountServiceImpl implements AccountService{
     TokenRepository tokenRepository;
     @Autowired
     MailService mailService;
+    @Autowired
+    PersistentTokenRepository persistentTokenRepository;
+    @Autowired
+    UserDetailsService userDetailsService;
+    @Autowired
+    SessionRegistry sessionRegistry;
     @Override
     public AccountCommand saveAccount(AccountForm accountForm) throws IOException {
         Account account;
@@ -64,6 +75,9 @@ public class AccountServiceImpl implements AccountService{
         }
         if(accountForm.getAddress() != null){
             account.setAddress(accountForm.getAddress());
+        }
+        if(accountForm.getBalance() != null){
+            account.setBalance(accountForm.getBalance());
         }
 
         if (accountForm.getFileData() != null) {
@@ -100,6 +114,9 @@ public class AccountServiceImpl implements AccountService{
     @Async
     @Override
     public void sendForgetPasswordEmail(Account account, String url) {
+        //Log out session user if any
+        deleteUserSession(account.getEmail());
+        //send email
         String token = UUID.randomUUID().toString();
         createVerificationToken(account,token);
         String name = account.getEmail().substring(0,account.getEmail().indexOf("@"));
@@ -181,5 +198,42 @@ public class AccountServiceImpl implements AccountService{
         accountRepository.findAll()
                 .iterator().forEachRemaining(account -> accountList.add(accountToAccountCommand.convert(account)));
         return accountList;
+    }
+
+    @Override
+    @Transactional(rollbackFor = RuntimeException.class)
+    public Boolean deleteUserIdList(String listId) {
+        String[] idDelete = listId.split("-");
+        List<Long> userDeleteIdList = new ArrayList<>();
+        if (idDelete.length > 0) {
+            for (String id : idDelete) {
+                try {
+                    userDeleteIdList.add(Long.parseLong(id));
+                    Optional<Account> account = accountRepository.getAccountById(Long.parseLong(id));
+                    if(account.isPresent()){
+                        deleteUserSession(account.get().getEmail());
+                        persistentTokenRepository.removeUserTokens(account.get().getEmail());
+                    }
+
+                } catch (NumberFormatException e) {
+                    log.warn("This is not a number");
+                    return false;
+                }
+            }
+        }
+        accountRepository.deleteAllById(userDeleteIdList);
+        return true;
+    }
+
+    @Override
+    public void deleteUserSession(String email) {
+        sessionRegistry.getAllPrincipals().forEach(principal -> log.info(((UserDetails) principal).getUsername()));
+        UserDetails user = userDetailsService.loadUserByUsername(email);
+        List<SessionInformation> sessionInformations = sessionRegistry.getAllSessions(user, false);
+        for (SessionInformation sessionInformation : sessionInformations) {
+            log.info(sessionInformation.getSessionId());
+            sessionInformation.expireNow();
+
+        }
     }
 }

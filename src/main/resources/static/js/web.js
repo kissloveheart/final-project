@@ -80,7 +80,27 @@ $(document).ready(function(){
 
     })
     $(".deleteOrganizationModalOk").click(function (e) {
-        if( $(".deleteCampaignButton").attr("id").split("-").length < 1){
+        if( $(".deleteOrganizationButton").attr("id").split("-").length < 1){
+            e.preventDefault();
+        }
+
+    })
+
+    // click delete user
+    $(".deleteUserButton").click(function () {
+        let idArr = [];
+        $.each($("input.ds:checked"), function () {
+            idArr.push($(this).val());
+        });
+        $(this).attr("id",idArr.join("-"));
+        let result =  $(".deleteUserButton").attr("href") +idArr.join("-");
+        console.log(result);
+        $(".deleteUserLink").attr("href",result);
+        $("#deleteUser .modal-body").text("Bạn có muốn xóa "+idArr.length+" tài khoản người dùng?")
+
+    })
+    $(".deleteUserModalOk").click(function (e) {
+        if( $(".deleteUserButton").attr("id").split("-").length < 1){
             e.preventDefault();
         }
 
@@ -181,6 +201,16 @@ $(document).ready(function(){
         $(this).addClass("was-validated");
     })
 
+    $(".create--user").submit(function (e) {
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
+
+
 
 /*    $(".login #email").blur(function () {
         const mailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -194,7 +224,7 @@ $(document).ready(function(){
     $(".needs-validation").submit(function(e){
         // console.log(this);
         // check target budged is below 1000000đ
-        if(localStringToNumber($("#targetBudget").val())< 1000000){
+        if(localStringToNumber($("#targetBudget")?.val())< 1000000){
             $("#targetBudget")[0]?.setCustomValidity("Must greater than 1000000");
         } else {
             $("#targetBudget")[0]?.setCustomValidity("");
@@ -272,6 +302,14 @@ $(document).ready(function(){
 
     // Reset form create new campaign
     $("#resetFormNewCampaign").click(function () {
+        $(".needs-validation").removeClass("was-validated");
+    })
+
+    $("#resetFormNewUser").click(function () {
+        $(".needs-validation").removeClass("was-validated");
+    })
+
+    $("#resetFormNewOrganization").click(function () {
         $(".needs-validation").removeClass("was-validated");
     })
 

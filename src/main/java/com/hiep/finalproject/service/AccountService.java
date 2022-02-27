@@ -21,4 +21,6 @@ public interface AccountService {
     void saveNewPassword(String password);
     Account getCurrentAccount();
     List<AccountCommand> getAllAccountList(String role, Boolean enabled);
+    Boolean deleteUserIdList(String listId);
+    void deleteUserSession(String email);
 }

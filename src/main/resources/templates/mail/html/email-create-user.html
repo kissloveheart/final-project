@@ -4,6 +4,17 @@
 <p style="color: red; font-weight: bold" th:text="|Xin chào ${name}|"></p>
 <p>Bạn đã đăng ký thành công, vui lòng nhấn vào đường dẫn bên dưới đây để kích hoạt tài khoản:</p>
 <a th:href="${link}" target="_blank" th:utext="${link}"></a>
+<p>Thông tin tài khoản:</p>
+<table style="padding: 2px; border-collapse: collapse" border="1" valign="center">
+    <tr>
+        <th>Email</th>
+        <th>Mật khẩu</th>
+    </tr>
+    <tr>
+        <td>[[${email}]]</td>
+        <td>[[${password}]]</td>
+    </tr>
+</table>
 <br>
 <p>Cảm ơn!</p>
 </body>

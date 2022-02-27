@@ -96,7 +96,7 @@ public class UserController {
         //
         String appUrl = String.valueOf(request.getRequestURL());
         eventPublisher.publishEvent(new OnRegistrationCompleteEvent(saveApp,
-                request.getLocale(), appUrl));
+                request.getLocale(), appUrl, null));
         model.addAttribute("message",
                 "Đăng ký thành công, vui lòng kích hoạt tài khoản bằng đường dẫn trong email đăng ký!");
         return "/user/registration";
@@ -140,6 +140,7 @@ public class UserController {
         model.addAttribute("message","Vui lòng kiểm tra email để lấy lại mật khẩu");
         return "/user/forgetPassword";
     }
+
 
     @GetMapping("/forget_password/confirm/{token:[A-Za-z0-9-]{36}}")
     public String confirmForgetPassword(Model model, @PathVariable String token) {

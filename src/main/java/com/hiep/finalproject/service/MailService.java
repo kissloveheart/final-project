@@ -8,6 +8,7 @@ import org.springframework.core.io.ByteArrayResource;
 import org.springframework.core.io.InputStreamSource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
@@ -24,6 +25,7 @@ public class MailService {
 
     private static final String EMAIL_REGIS_TEMPLATE_NAME = "html/email-simple";
     private static final String EMAIL_FORGET_TEMPLATE_NAME = "html/email-forget";
+    private static final String EMAIL_NEW_USER_NAME = "html/email-create-user";
     private static final String EMAIL_INLINEIMAGE_TEMPLATE_NAME = "html/email-inlineimage";
 
     @Autowired
@@ -64,6 +66,7 @@ public class MailService {
         log.info("Email sent successfully to: " + recipientEmail);
     }
 
+    @Async
     public void sendForgetMail(
             String recipientName, String linkToken, String recipientEmail)
             throws MessagingException {
@@ -88,6 +91,35 @@ public class MailService {
         mailSender.send(mimeMessage);
         log.info("Email sent successfully to: " + recipientEmail);
     }
+
+    public void sendNewUserMail(
+            String recipientName, String linkToken, String recipientEmail, String password)
+            throws MessagingException {
+
+        // Prepare the evaluation context
+        Context ctx = new Context();
+        ctx.setVariable("name", recipientName);
+        ctx.setVariable("link", linkToken);
+        ctx.setVariable("email",recipientEmail);
+        ctx.setVariable("password",password);
+
+        // Prepare message using a Spring helper
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage, "UTF-8");
+        message.setSubject("Thông tin tài khoản mới");
+        message.setFrom(env.getProperty("support.email"));
+        message.setTo(recipientEmail);
+
+        // Create the HTML body using Thymeleaf
+        String htmlContent = htmlTemplateEngine.process(EMAIL_NEW_USER_NAME, ctx);
+        message.setText(htmlContent, true /* isHtml */);
+
+        // Send email
+        mailSender.send(mimeMessage);
+        log.info("Email sent successfully to: " + recipientEmail);
+    }
+
+
 
     /*
      * Send HTML mail with inline image

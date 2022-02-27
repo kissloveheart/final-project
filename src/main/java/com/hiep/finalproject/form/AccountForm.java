@@ -20,6 +20,7 @@ public class AccountForm {
     private Boolean enable;
     private Date createdDate;
     private String address;
+    private Double balance;
     private MultipartFile fileData;
 
     public AccountForm(Account account) {
