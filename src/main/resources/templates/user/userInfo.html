@@ -51,6 +51,11 @@
                             Đổi mật khẩu
                         </a>
                     </li>
+                    <li>
+                        <a href="#" class="nav-link link-dark" id="logout">
+                            Đăng xuất
+                        </a>
+                    </li>
                 </ul>
                 <hr>
                 <div sec:authorize="hasAuthority('ADMIN')">
@@ -69,6 +74,11 @@
                         <li>
                             <a th:href="@{/management/list-user}" class="nav-link link-dark">
                                 Danh sách tài khoản
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/management/list-donation}" class="nav-link link-dark">
+                                Danh sách quyên góp
                             </a>
                         </li>
                     </ul>
@@ -135,7 +145,6 @@
         </div>
 
     </div>
-    <hr>
 </main>
 </body>
 </html>

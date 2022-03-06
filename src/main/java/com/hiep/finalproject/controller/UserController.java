@@ -1,7 +1,6 @@
 package com.hiep.finalproject.controller;
 
 import com.hiep.finalproject.command.AccountCommand;
-import com.hiep.finalproject.exceptions.NotFoundException;
 import com.hiep.finalproject.form.AccountForm;
 import com.hiep.finalproject.form.ChangePasswordForm;
 import com.hiep.finalproject.listener.OnRegistrationCompleteEvent;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
@@ -24,7 +22,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpServletRequest;
@@ -238,7 +235,7 @@ public class UserController {
         return "/user/403Page";
     }
 
-    @ResponseStatus(HttpStatus.NOT_FOUND)
+/*    @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NotFoundException.class)
     public ModelAndView handleNotFound(){
 
@@ -249,6 +246,6 @@ public class UserController {
         modelAndView.setViewName("404error");
 
         return modelAndView;
-    }
+    }*/
 
 }

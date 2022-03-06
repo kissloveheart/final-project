@@ -23,10 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.mail.MessagingException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -47,6 +44,7 @@ public class AccountServiceImpl implements AccountService{
     UserDetailsService userDetailsService;
     @Autowired
     SessionRegistry sessionRegistry;
+
     @Override
     public AccountCommand saveAccount(AccountForm accountForm) throws IOException {
         Account account;
@@ -236,4 +234,21 @@ public class AccountServiceImpl implements AccountService{
 
         }
     }
+
+    @Override
+    public void processOAuthLogin(String email) {
+        Optional<Account> account = accountRepository.findByEmail(email);
+        if(account.isEmpty()){
+            Account user = new Account();
+            user.setEmail(email);
+            user.setEnable(true);
+            user.setCreatedDate(new Date());
+            user.setRole("USER");
+            user.setEncryptedPassword(passwordEncoder.encode(UUID.randomUUID().toString()));
+            accountRepository.save(user);
+            log.info("save the oAuth account successfully");
+        }
+
+    }
+
 }

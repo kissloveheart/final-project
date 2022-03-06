@@ -2,18 +2,176 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="~{fragment/layout::layout(~{::title},~{::main})}">
 <head>
     <meta charset="UTF-8">
-    <title>Profile</title>
+    <title>Trang chủ</title>
 </head>
 <body>
-<main class="container">
-    <div class="row">
-        <div class="col-sm-6">
-            <h3>Welcome: guys!"</h3>
-            <div sec:authentication="name"></div>
-            <br/>
+<main class="container-xxl min-vh-100">
+
+    <div id="carouselExampleCaptions" class="carousel slide pt-3" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                    aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                    aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                    aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img th:src="@{/image/banner_1.jpg}" class="d-block w-100" alt="Tu thien">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Thương nhớ miền Trung</h5>
+                    <p>Mang đến hơi ấm cho bà con ở miền Trung trước khi mùa lạnh tràn đến</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/image/banner_2.jpg}" class="d-block w-100" alt="Tu thien">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Vun đắp măng non</h5>
+                    <p>Cùng Á hậu mang phần quà đến các em học sinh nhỏ</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img th:src="@{/image/banner_3.jpg}" class="d-block w-100" alt="Tu thien">
+                <div class="carousel-caption d-none d-md-block">
+                    <h5>Nhớ về cội nguồn</h5>
+                    <p>Cùng Quyền Linh trao phần quà cho những người già neo đơn</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+    <div class="px-4 py-5 my-5 text-center" id="about">
+        <img class="d-block mx-auto mb-4" th:src="@{/image/logo.png}" alt="" width="250">
+        <h2 class="display-5 fw-bold">Tấm lòng Việt</h2>
+        <div class="col-lg-8 mx-auto">
+            <p class="lead mb-4">Trái Tim Volunteer là nền tảng giúp bạn dễ dàng chung tay quyên góp tiền cùng hàng
+                triệu người, giúp đỡ các hoàn cảnh khó khăn trên khắp cả nước.</p>
+            <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                <button type="button" class="btn btn-success btn-lg px-4 gap-3">Về chúng tôi</button>
+                <a href="#campaign" class="btn btn-outline-success btn-lg px-4 gap-3">Quyên góp</a>
+            </div>
         </div>
     </div>
-    <hr>
+
+    <div class="album py-5 bg-light">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold text-success" id="campaign">Các chương trình quyên góp</h2>
+            </div>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3 " th:remove="all-but-first">
+                <div class="col" th:each="campaign : ${campaignList}">
+                    <a th:href="@{|/campaign/${campaign.id}|}" class="text-decoration-none text-secondary">
+                        <div class="card shadow-sm">
+                            <img class="bd-placeholder-img card-img-top" width="100%" height="225"
+                                 th:src="@{|/campaign/${campaign.id}/image|}"
+                                 role="img" aria-label="Placeholder: Thumbnail"/>
+                            <div class="card-body">
+
+                                <p class="card-text campaign--text" th:utext="${campaign.name}">This is a wider card
+                                    with</p>
+
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-success">Đã quyên góp</button>
+                                        <button type="button" class="btn btn-sm btn-outline-success">
+                                            [[${#numbers.formatDecimal(campaign.totalAmount,3,'POINT',0,'COMMA')}+'đ']]
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"/>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                        </svg>
+
+                        <div class="card-body">
+                            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to
+                                additional content. This content is a little bit longer.</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                                    <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                                </div>
+                                <small class="text-muted">9 mins</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container px-4 py-5" id="hanging-icons">
+        <h2 class="pb-2 border-bottom text-success">Trái tim Volunteer - Việc tốt không khó</h2>
+        <div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
+            <div class="col d-flex align-items-start">
+                <div class="bg-light text-dark flex-shrink-0 me-3">
+                    <div class="bi1" th:height="24px" th:width="24px">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h4>1000đ cũng là đáng quý</h4>
+                    <p>Với mức ủng hộ tối thiểu 1.000 đồng, bạn đã cùng hàng triệu nhà hảo tâm khác của “Trái tim
+                        Volunteer” giúp đỡ những mảnh đời khó khăn.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div class="bg-light text-dark flex-shrink-0 me-3">
+                    <div class="bi1" th:height="24px" th:width="24px">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h4>Minh bạch, công khai mọi khoản đóng góp</h4>
+                    <p>Mọi thông tin về hoạt động đóng góp, tài trợ đều được công khai và cập nhật liên tục.</p>
+                </div>
+            </div>
+            <div class="col d-flex align-items-start">
+                <div class="bg-light text-dark flex-shrink-0 me-3">
+                    <div class="bi1" th:height="24px" th:width="24px">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                             stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round"
+                                  d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                        </svg>
+                    </div>
+                </div>
+                <div>
+                    <h4>Đối tác của các cơ quan, tổ chức hảo tâm uy tín</h4>
+                    <p>“Trái tim Volunteer” đã và đang kết nối được với rất nhiều đơn vị bảo trợ, báo chí, đơn vị hảo
+                        tâm uy tín trên cả nước.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
 </main>
 </body>
 </html>

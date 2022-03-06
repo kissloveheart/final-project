@@ -11,5 +11,6 @@ public class DonationCommand {
     private Long id;
     private Long campaignId;
     private Date date;
-    private double amount;
+    private Double amount;
+    private String email;
 }

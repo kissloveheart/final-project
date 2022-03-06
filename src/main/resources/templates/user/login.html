@@ -92,11 +92,11 @@
                             </div>
                         </div>
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="gridCheck1">
-                            <label class="form-check-label" for="gridCheck1" name="remember-me"> Ghi nhớ?</label>
+                            <input class="form-check-input" type="checkbox" id="remember-me" name="remember-me">
+                            <label class="form-check-label" for="remember-me"> Ghi nhớ?</label>
                         </div>
                         <!--                        (?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}-->
-                        <div class="row">
+                        <div class="row mb-3">
                             <div class="col-auto">
                                 <button class="btn btn-success" type="submit">Đăng nhập</button>
                             </div>
@@ -108,7 +108,7 @@
                         </div>
 
                     </form>
-
+                    <a th:href="@{/oauth2/authorization/google}"><button class="btn btn-danger">Đăng nhập bằng Google</button></a>
                 </div>
             </div>
         </div>

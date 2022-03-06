@@ -28,45 +28,54 @@
 
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
+    <script type="text/javascript" th:src="@{/webjars/js-cookie/js.cookie.js}"></script>
 
     <link rel="stylesheet" th:href="@{/css/style.css}" href="/static/css/style.css"/>
+    <link rel="stylesheet" th:href="@{/fonts/icomoon/style.css}" href="static/fonts/icomoon/style.css">
 </head>
 <body class="bg-light">
-<header class="container-xxl border-3 border-bottom border-success">
+<header class="container-xxl border-3 border-bottom border-success py-3">
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#"><img th:src="@{/image/logo.png}" src="/image/logo.png"
+        <a class="navbar-brand" th:href="@{/}"><img th:src="@{/image/logo.png}" src="/image/logo.png"
         style="width: 100px"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse fs-3" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse fs-5" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0" >
                 <li class="nav-item">
-                    <a class="nav-link fw-bold link-success active" aria-current="page" th:href="@{/}">Trang chủ</a>
+                    <a class="nav-link text-black active" aria-current="page" th:href="@{/}">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" aria-current="page" th:href="@{/#about}">Về chúng tôi</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-black" aria-current="page" th:href="@{/#campaign}">Đợt quyên góp</a>
                 </li>
             </ul>
             <div class="d-flex">
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <div sec:authorize="!isAuthenticated()">
-                            <a class="nav-link fw-bold" th:href="@{/login}">Đăng nhập</a>
+                            <a class="nav-link " th:href="@{/login}">
+                                <button type="button" class="btn btn-success">Đăng nhập</button>
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div sec:authorize="!isAuthenticated()">
-                            <a class="nav-link fw-bold" th:href="@{/regis}">Đăng ký</a>
+                            <a class="nav-link " th:href="@{/regis}">
+                                <button type="button" class="btn btn-outline-success">Đăng ký</button>
+                            </a>
                         </div>
                     </li>
                     <li class="nav-item">
                         <div sec:authorize="isAuthenticated()">
-                            <a class="nav-link fw-bold" th:href="@{/user_info}">Trang cá nhân</a>
-                        </div>
-                    </li>
-                    <li class="nav-item">
-                        <div sec:authorize="isAuthenticated()">
-                            <a class="nav-link fw-bold" th:href="@{/logout}">Đăng xuất</a>
+                            <a class="nav-link " th:href="@{/user_info}">
+                                <button type="button" class="btn btn-success">Trang cá nhân</button>
+                            </a>
                         </div>
                     </li>
                 </ul>
@@ -75,13 +84,56 @@
     </div>
 </nav>
 </header>
-<main class="container-xxl" th:insert="${content}">
-
+<main class="container-xxl min-vh-100" th:insert="${content}">
 </main>
-<footer class="container-xxl text-center bg-light">
-    <div class="text-center p-4" >
-        © 2021 Copyright:
-        <a class="link-success fw-bold" href="#">Volunteer</a>
+<footer class="footer-59391 border-3 border-top border-success bg-light">
+    <div class="border-bottom pb-5 mb-4">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-3">
+                    <form action="#" class="subscribe mb-4 mb-lg-0">
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Nhập email của bạn">
+                            <button><span class="icon-keyboard_backspace"></span></button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg-6 text-lg-center">
+                    <ul class="list-unstyled nav-links nav-left mb-4 mb-lg-0">
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-3">
+                    <ul class="list-unstyled nav-links social nav-right text-lg-right">
+                        <li><a href="#"><span class="icon-twitter"></span></a></li>
+                        <li><a href="#"><span class="icon-instagram"></span></a></li>
+                        <li><a href="#"><span class="icon-facebook"></span></a></li>
+                        <li><a href="#"><span class="icon-pinterest"></span></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-4 text-lg-center site-logo order-1 order-lg-2 mb-3 mb-lg-0">
+                <a th:href="@{/}" class="m-0 p-0 text-success">Volunteer</a>
+            </div>
+            <div class="col-lg-4 order-2 order-lg-1 mb-3 mb-lg-0">
+                <ul class="list-unstyled nav-links m-0 nav-left">
+                    <li><a href="#">Điều khoản</a></li>
+                    <li><a href="#">Riêng tư</a></li>
+                    <li><a href="#">Liên hệ</a></li>
+                </ul>
+            </div>
+
+            <div class="col-lg-4 text-lg-right order-3 order-lg-3">
+                <p class="m-0 text-muted"><small>&copy; 2022. All Rights Reserved.</small></p>
+            </div>
+        </div>
     </div>
 </footer>
 

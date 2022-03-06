@@ -23,4 +23,6 @@ public interface AccountService {
     List<AccountCommand> getAllAccountList(String role, Boolean enabled);
     Boolean deleteUserIdList(String listId);
     void deleteUserSession(String email);
+    void processOAuthLogin(String email);
+
 }

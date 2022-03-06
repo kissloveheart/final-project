@@ -8,11 +8,10 @@ import com.hiep.finalproject.model.Organization;
 import com.hiep.finalproject.repository.CampaignRepository;
 import com.hiep.finalproject.repository.OrganizationRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.text.NumberFormat;
@@ -52,9 +51,26 @@ public class CampaignServiceImpl implements CampaignService{
     }
 
     @Override
+    public CampaignCommand getFullCampaignCommandById(Long id) {
+        Optional<Campaign> optionalCampaign = campaignRepository.findCampaignById(id);
+        if(optionalCampaign.isEmpty()){
+            return null;
+        }
+        return campaignToCampaignCommand.convert(optionalCampaign.get());
+    }
+
+    @Override
     public List<CampaignCommand> getAllCampaign() {
+        return getAllCampaign(null);
+    }
+
+    @Override
+    public List<CampaignCommand> getAllCampaign(Pageable pageable) {
         List<CampaignCommand> campaignCommandList = new ArrayList<>();
-        campaignRepository.findAll().iterator()
+        if(pageable == null){
+            pageable = PageRequest.of(0,100);
+        }
+        campaignRepository.findAllCampaign(pageable).iterator()
                 .forEachRemaining(campaign -> campaignCommandList.add(campaignToCampaignCommand.convert(campaign)));
         return campaignCommandList;
     }

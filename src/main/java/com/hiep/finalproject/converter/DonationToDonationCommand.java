@@ -13,6 +13,9 @@ public class DonationToDonationCommand implements Converter<Donation, DonationCo
         command.setId(source.getId());
         command.setAmount(source.getAmount());
         command.setDate(source.getDate());
+        if(source.getAccount()!= null){
+            command.setEmail(source.getAccount().getEmail());
+        }
         if (source.getCampaign() != null) {
             command.setCampaignId(source.getCampaign().getId());
         }

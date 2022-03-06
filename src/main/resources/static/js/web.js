@@ -1,6 +1,32 @@
+
+
 // -------------------------------jQuery------------------------------
 
 $(document).ready(function(){
+
+    $.ajaxSetup({
+        beforeSend : function(xhr, settings) {
+            if (settings.type == 'POST' || settings.type == 'PUT'
+                || settings.type == 'DELETE') {
+                if (!(/^http:.*/.test(settings.url) || /^https:.*/
+                    .test(settings.url))) {
+                    // Only send the token to relative URLs i.e. locally.
+                    xhr.setRequestHeader("X-XSRF-TOKEN",
+                        Cookies.get('XSRF-TOKEN'));
+                }
+            }
+        }
+    });
+    
+    $('#logout').click(function () {
+        $.ajax({
+            url:"/logout",
+            type: "POST",
+            success:function (data) {
+                window.location.href = "/";
+            }
+        })
+    })
     // add active class for nav bar when current page
 
     $.each($("ul.nav-tabs").find("a"), function() {
@@ -179,6 +205,14 @@ $(document).ready(function(){
     })
 
     $(".editProfile").submit(function (e) {
+        if (!e.target.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        $(this).addClass("was-validated");
+    })
+
+    $(".donate").submit(function (e) {
         if (!e.target.checkValidity()) {
             e.preventDefault();
             e.stopPropagation();

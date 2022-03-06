@@ -1,6 +1,8 @@
 package com.hiep.finalproject.service;
 
+import com.hiep.finalproject.command.DonationCommand;
 import com.hiep.finalproject.dto.DonationDto;
+import com.hiep.finalproject.exceptions.BalanceTransactionException;
 import org.springframework.data.domain.Pageable;
 
 import java.util.List;
@@ -8,5 +10,8 @@ import java.util.List;
 public interface DonationService {
     List<DonationDto> getAllDonationDtoByAccountId(Long id, Pageable pageable);
     List<DonationDto> getAllDonationDtoByCurrentAccount(Pageable pageable);
+    void saveDonation(DonationCommand donationCommand);
+    void donateCampaign(DonationCommand donationCommand)  throws BalanceTransactionException;
+    void solveBalance(Double amount) throws BalanceTransactionException;
 
 }
