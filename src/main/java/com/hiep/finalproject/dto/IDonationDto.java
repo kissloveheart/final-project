@@ -8,4 +8,5 @@ public interface IDonationDto {
     Double getAmount();
     String getCampaign();
     String getOrganization();
+    String getAccount();
 }

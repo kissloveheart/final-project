@@ -12,6 +12,7 @@ import com.hiep.finalproject.model.Organization;
 import com.hiep.finalproject.repository.AccountRepository;
 import com.hiep.finalproject.service.AccountService;
 import com.hiep.finalproject.service.CampaignService;
+import com.hiep.finalproject.service.DonationService;
 import com.hiep.finalproject.service.OrganizationService;
 import com.hiep.finalproject.validator.CampaignValidator;
 import com.hiep.finalproject.validator.OrganizationValidator;
@@ -19,6 +20,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.core.env.Environment;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -55,6 +57,8 @@ public class AdminController {
     private AccountRepository accountRepository;
     @Autowired
     Environment environment;
+    @Autowired
+    private DonationService donationService;
 
     @InitBinder({"campaignForm", "organizationForm"})
     public void customizeBinding(WebDataBinder binder) {
@@ -357,5 +361,24 @@ public class AdminController {
         redirectAttributes.addAttribute("notifySuccess", "Đã gửi mật khẩu mới đến email người dùng");
         return "redirect:/management/list-user";
     }
+
+    @GetMapping("/management/list-donation")
+    public String donation(Model model){
+        model.addAttribute("donationList",donationService.getAllDonationDto(PageRequest.of(0,900)));
+        return "/management/listDonation";
+    }
+
+    @GetMapping("/management/donation/delete/{checkId}")
+    public String deleteDonation(@PathVariable String checkId,
+                             RedirectAttributes redirectAttributes) {
+        Boolean isDelete = accountService.deleteUserIdList(checkId);
+        if (!isDelete) {
+            redirectAttributes.addFlashAttribute("notifyFail", "Xóa lượt quyên góp không thành công");
+        }
+        log.info("Delete donation successfully");
+        redirectAttributes.addFlashAttribute("notifySuccess", "Xóa lượt quyên góp thành công");
+        return "redirect:/management/list-donation";
+    }
+
 
 }

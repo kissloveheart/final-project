@@ -132,6 +132,26 @@ $(document).ready(function(){
 
     })
 
+    // click delete donation
+    $(".deleteDonationButton").click(function () {
+        let idArr = [];
+        $.each($("input.ds:checked"), function () {
+            idArr.push($(this).val());
+        });
+        $(this).attr("id",idArr.join("-"));
+        let result =  $(".deleteDonationButton").attr("href") +idArr.join("-");
+        console.log(result);
+        $(".deleteDonationLink").attr("href",result);
+        $("#deleteDonation .modal-body").text("Bạn có muốn xóa "+idArr.length+" lượt quyên góp?")
+
+    })
+    $(".deleteDonationModalOk").click(function (e) {
+        if( $(".deleteDonationButton").attr("id").split("-").length < 1){
+            e.preventDefault();
+        }
+
+    })
+
     // click edit campaign
     $(".editCampaignLink")?.click(function (e) {
         if ($("input.ds:checked").length == 0){

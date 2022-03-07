@@ -13,6 +13,7 @@ public class DonationDto {
     Double amount;
     String campaign;
     String organization;
+    String account;
 
     public DonationDto(IDonationDto iDonationDto) {
         this.id = iDonationDto.getId();
@@ -20,5 +21,6 @@ public class DonationDto {
         this.amount = iDonationDto.getAmount();
         this.campaign = iDonationDto.getCampaign();
         this.organization = iDonationDto.getOrganization();
+        this.account = iDonationDto.getAccount();
     }
 }

@@ -48,12 +48,12 @@
 </header>
 <main class="container-xxl py-3">
     <!-- Modal -->
-    <div class="modal fade" id="deleteOrganization" tabindex="-1" aria-labelledby="deleteOrganizationModal"
+    <div class="modal fade" id="deleteDonation" tabindex="-1" aria-labelledby="deleteDonationModal"
          aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteOrganizationModal">Xóa đơn vị tổ chức</h5>
+                    <h5 class="modal-title" id="deleteDonationModal">Xóa lượt quyên góp</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"
                             aria-label="Close"></button>
                 </div>
@@ -62,8 +62,8 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Từ chối</button>
-                    <a class="deleteOrganizationLink" >
-                        <button type="button" class="btn btn-success deleteOrganizationModalOk" data-bs-dismiss="modal" >Đồng ý</button>
+                    <a class="deleteDonationLink" >
+                        <button type="button" class="btn btn-success deleteDonationModalOk" data-bs-dismiss="modal" >Đồng ý</button>
                     </a>
                 </div>
             </div>
@@ -79,12 +79,9 @@
     <div class="bg-white border border-top-0 py-3">
         <div class="container-md">
             <div class="d-flex flex-wrap gap-3 mb-3">
-                <a th:href="@{/management/organization/new}">
-                    <button type="button" class="btn btn-success">Thêm</button>
-                </a>
-                <button type="button" class="btn btn-danger modify deleteOrganizationButton"
-                        data-bs-toggle="modal" data-bs-target="#deleteOrganization"
-                        th:href="@{/management/organization/delete/}" disabled>Xóa
+                <button type="button" class="btn btn-danger modify deleteDonationButton"
+                        data-bs-toggle="modal" data-bs-target="#deleteDonation"
+                        th:href="@{/management/donation/delete/}" disabled>Xóa
                 </button>
             </div>
             <div class="container">
@@ -103,25 +100,21 @@
                 <thead class="table-light">
                 <tr>
                     <th scope="col" class="text-secondary">Chọn</th>
-                    <th scope="col" class="text-secondary">Logo</th>
+                    <th scope="col" class="text-secondary">Thời gian</th>
                     <th scope="col" class="text-secondary">Tên đơn vị tổ chức</th>
-                    <th scope="col" class="text-secondary">Số đợt quyên góp</th>
-                    <th scope="col" class="text-secondary">Tiền đã nhận</th>
+                    <th scope="col" class="text-secondary">Tên đợt quyên góp</th>
+                    <th scope="col" class="text-secondary">Email</th>
+                    <th scope="col" class="text-secondary">Số tiền</th>
                 </tr>
                 </thead>
                 <tbody th:remove="all-but-first">
-                    <tr th:each="organizationInfo : ${organizationList}">
-                        <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${organizationInfo.id}"></td>
-                        <td>
-                            <img th:src="@{|/organization/${organizationInfo.id}/image|}" th:if="${organizationInfo.id}" th:width="50">
-                        </td>
-                        <td>
-                            <a th:href="@{'/management/organization/edit/'+${organizationInfo.id}}" th:utext="${organizationInfo.name}"
-                               class="text-success text-decoration-none"></a>
-                        </td>
-                        <td th:utext="${organizationInfo.countCampaign}?${organizationInfo.countCampaign}:0"></td>
-                        <td th:utext="${organizationInfo.totalMoneyDonation}?
-                         ${#numbers.formatDecimal(organizationInfo.totalMoneyDonation,3,'POINT',0,'COMMA')}+'đ':0"></td>
+                    <tr th:each="donation : ${donationList}">
+                        <td><input class="form-check-input ds" type="checkbox" name="check" th:value="${donation.id}"></td>
+                        <td th:utext="${#calendars.format(donation.date,'dd/MM/yyyy HH:mm')}"></td>
+                        <td th:utext="${donation.organization}"></td>
+                        <td th:utext="${donation.campaign}"></td>
+                        <td th:utext="${donation.account}"></td>
+                        <td th:utext="${#numbers.formatInteger(donation.amount,3,'POINT')}+'đ'"></td>
                     </tr>
                 </tbody>
             </table>
