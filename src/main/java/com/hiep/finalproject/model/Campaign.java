@@ -28,7 +28,7 @@ public class Campaign {
     private Date startDate;
     private Date endDate;
     private boolean status;
-    @Column(columnDefinition = "nvarchar(2555)")
+    @Column(columnDefinition = "ntext")
     private String description;
     @Lob
     private byte[] image;

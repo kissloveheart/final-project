@@ -9,8 +9,8 @@ import org.springframework.data.repository.CrudRepository;
 import java.util.Optional;
 
 public interface CampaignRepository extends CrudRepository<Campaign,Long> {
-    @Query("select c from Campaign as c join c.donationList")
+    @Query("select c from Campaign as c left join c.donationList")
     Page<Campaign> findAllCampaign(Pageable pageable);
-    @Query("select c from Campaign as c join c.donationList as d join d.account where c.id =?1")
+    @Query("select c from Campaign as c left join c.donationList as d join d.account where c.id =?1")
     Optional<Campaign> findCampaignById(Long id);
 }

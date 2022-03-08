@@ -38,7 +38,7 @@
 <nav class="navbar navbar-expand-md navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" th:href="@{/}"><img th:src="@{/image/logo.png}" src="/image/logo.png"
-        style="width: 100px"></a>
+        style="width: 100px" id="top"></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -100,9 +100,9 @@
                 </div>
                 <div class="col-lg-6 text-lg-center">
                     <ul class="list-unstyled nav-links nav-left mb-4 mb-lg-0">
-                        <li><a href="#">Features</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Pricing</a></li>
+                        <li><a th:href="@{/#about}">Về chúng tôi</a></li>
+                        <li><a th:href="@{/#campaign}">Đợt quyên góp</a></li>
+                        <li><a th:href="@{#top}">Lên trên</a></li>
                     </ul>
                 </div>
                 <div class="col-lg-3">
